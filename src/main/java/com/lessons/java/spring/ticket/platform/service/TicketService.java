@@ -35,4 +35,15 @@ public class TicketService {
 
 	}
 
+	/**
+	 * 
+	 * @param id, id del ticket;
+	 * @return tutte le informazioni del ticket specifico;
+	 */
+	public Ticket getById(int id) {
+
+		return repository.findById(id).get();
+
+	}
+
 }
