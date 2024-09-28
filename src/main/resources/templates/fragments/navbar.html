@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+
+<html xmlns="http://www.thymeleaf.org">
+
+<body>
+
+	<header>
+		<nav th:fragment="navbar" class="navbar navbar-expand-sm bg-body-tertiary">
+			<div class="container-fluid">
+
+				<!-- Title-->
+				<a class="navbar-brand" th:href="@{/tickets}">Tickets</a>
+
+				<!-- Title -->
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+					aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<!-- Menu' -->
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav">
+
+						<!-- List tickets -->
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/tickets}">List Tickets</a>
+						</li>
+
+						<!-- Create tickets -->
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/pizze/create}">Create Tickets</a>
+						</li>
+
+					</ul>
+				</div>
+
+			</div>
+		</nav>
+	</header>
+
+</body>
+
+</html>
