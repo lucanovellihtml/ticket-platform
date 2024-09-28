@@ -90,6 +90,11 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.lessons.java</groupId>
+			<artifactId>spring-la-mia-pizzeria-crud</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 
