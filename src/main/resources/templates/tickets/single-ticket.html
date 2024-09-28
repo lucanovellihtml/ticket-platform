@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.thymeleaf.org">
+
+<head th:insert="~{fragments/fragments :: head}">
+</head>
+
+<body>
+
+
+	<header th:insert="~{fragments/navbar :: navbar}">
+	</header>
+
+
+	<main>
+
+		<!-- Section table index -->
+		<section class="container text-center">
+			<div class="row align-items-start gap-5">
+
+				<!-- Title -->
+				<div class="col-12 pt-3">
+					<h1>Informazione Ticket Selezionato</h1>
+				</div>
+
+				<!-- Card-->
+				<div class="col-12 pb-5 d-flex justify-content-center">
+					<div class="card" style="width: 18rem;">
+
+						<!-- Header card -->
+						<header class="card-header">
+							<!-- Name -->
+							<h2 class="card-title" th:text="${ticket.name}"></h2>
+						</header>
+
+						<!-- Body card -->
+						<div class="card-body">
+
+							<!-- Statu -->
+							<h5 class="card-title pt-3">STATUS</h5>
+							<p class="card-text" th:text="${ticket.status}"></p>
+
+							<!-- Operator -->
+							<h5 class="card-title pt-3">OPERATOR</h5>
+							<p class="card-text" th:text="${ticket.operator.getEmail()}"></p>
+
+
+							<!-- Note available -->
+							<!-- Title -->
+							<h5 class="card-title pt-3">LIST NOTES</h5>
+
+							<!-- Button show notes -->
+							<a th:href="@{/notes}" style="text-decoration: none;">
+								<button type="button" class="btn btn-secondary mt-2 mb-2">SHOW NOTES</button>
+							</a>
+
+						</div>
+
+						<!-- Footre card -->
+						<footer class="card-footer">
+
+							<!-- Button back/update -->
+							<a th:href="@{/tickets}" style="text-decoration: none;">
+								<button type="button" class="btn btn-dark mt-2 mb-2">BACK</button>
+							</a>
+
+						</footer>
+
+					</div>
+
+				</div>
+		</section>
+
+	</main>
+
+</body>
+
+
+<th:block th:replace="~{fragments/fragments :: scripts}">
+</th:block>
+
+
+</html>
