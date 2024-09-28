@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -39,6 +40,19 @@ public class TicketController {
 		model.addAttribute("tickets", listTickets);
 
 		return "/tickets/index";
+
+	}
+
+	/**
+	 * 
+	 * @return Il singolo ticket;
+	 */
+	@GetMapping("/show/{id}")
+	public String showSingleTicket(@PathVariable("id") int id, Model model) {
+
+		model.addAttribute("ticket", service.getById(id));
+
+		return "/tickets/single-ticket";
 
 	}
 
