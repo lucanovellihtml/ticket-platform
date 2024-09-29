@@ -15,7 +15,6 @@ public class TicketService {
 	private TicketRepository repository;
 
 	/**
-	 * 
 	 * @return la lista dei tickets presenti nel repository
 	 */
 	public List<Ticket> findAllTickets() {
@@ -26,8 +25,8 @@ public class TicketService {
 
 	/**
 	 * 
-	 * @param name, filto di ricerca del ticket;
-	 * @return la lista dei tickets che contentono il nome della ricerca;
+	 * @param name, filto di ricerca del ticket
+	 * @return la lista dei tickets che contentono il nome della ricerca
 	 */
 	public List<Ticket> findAllByName(String name) {
 
@@ -37,12 +36,22 @@ public class TicketService {
 
 	/**
 	 * 
-	 * @param id, id del ticket;
-	 * @return tutte le informazioni del ticket specifico;
+	 * @param id, id del ticket
+	 * @return tutte le informazioni del ticket specifico
 	 */
 	public Ticket getById(int id) {
 
 		return repository.findById(id).get();
+
+	}
+
+	/**
+	 * @param ticket, l'oggeto pizza che deve essere aggiornato
+	 * @return il repository aggiornato
+	 */
+	public Ticket update(Ticket ticket) {
+
+		return repository.save(ticket);
 
 	}
 
