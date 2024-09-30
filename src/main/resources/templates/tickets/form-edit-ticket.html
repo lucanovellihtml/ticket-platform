@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.thymeleaf.org">
+
+<head th:insert="~{fragments/fragments :: head}">
+</head>
+
+
+<body>
+
+	<header th:insert="~{fragments/navbar :: navbar}">
+	</header>
+
+	<main>
+
+		<!-- Section form update -->
+		<section class="container text-center">
+			<div class="row gap-4 justify-content-center">
+
+				<!-- Title -->
+				<div class="col-12 pt-3 d-flex flex-column gap-3">
+					<h1>Modifica ticket</h1>
+					<p>Complete the form to modificate the ticket!!!</p>
+				</div>
+
+
+				<!-- Form edit ticket -->
+				<form class="col-12 col-lg-6" id="form-update-ticket" th:object="${ticket}"
+					th:action="@{/tickets/edit/{id}(id=${ticket.id})}" method="POST">
+
+
+					<!-- Input id -->
+					<div class="mb-3 d-none">
+						<label for="id" class="form-label">Id ticket</label>
+						<input type="number" class="form-control" id="id" th:field="*{id}" th:value="*{id}"
+							aria-label="readonly id ticket" readonly>
+					</div>
+
+					<!-- Input name -->
+					<div class="mb-3">
+						<label for="name" class="form-label">Name</label>
+						<input type="text" class="form-control" id="name" aria-label="Disabled input name of ticket"
+							th:field="*{name}">
+					</div>
+
+
+					<!-- Input status now -->
+					<div class="mb-3">
+						<label for="status" class="form-label">Status now</label>
+						<input type="text" class="form-control"
+							th:value="${status}" aria-label="readonly status ticket" readonly>
+					</div>
+
+					<!-- Input status -->
+					<div class="mb-3">
+						<h6 class="form-label">Choose new status</h6>
+						<div class="form-check d-flex text-start gap-2">
+							<input class="form-check-input" type="radio" name="status" id="status" value="Da fare" th:field="*{status}">
+							<label class="form-check-label" for="status">
+								Da fare
+							</label>
+						</div>
+						<div class="form-check d-flex text-start gap-2">
+							<input class="form-check-input" type="radio" name="status" id="status" value="In corso" th:field="*{status}" checked>
+							<label class="form-check-label" for="status">
+								In corso
+							</label>
+						</div>
+						<div class="form-check d-flex text-start gap-2">
+							<input class="form-check-input" type="radio" name="status" id="status" value="Completato" th:field="*{status}">
+							<label class="form-check-label" for="status">
+								Completato
+							</label>
+						</div>
+					</div>
+
+					<!-- Input note -->
+					<div class="mb-3">
+						<a href="/tickets" style="text-decoration: none;">
+							<button type="button" class="btn btn-secondary mt-2 mb-2">ADD A NEW NOTE</button>
+						</a>
+					</div>
+					
+					<!-- Input operator -->
+					<div class="mb-3 d-none">
+						<label for="operator" class="form-label">Operator</label>
+						<input type="number" class="form-control" id="operator" th:field="*{operator.id}"
+							th:value="*{operator.getId()}" aria-label="readonly operator" readonly>
+					</div>
+
+					<!-- Input email operator -->
+					<div class="mb-3">
+						<label for="operatorEmail" class="form-label">Operator</label>
+						<input type="email" class="form-control" id="operatorEmail" th:value="*{operator.getEmail()}"
+							aria-label="readonly operator email" disabled>
+					</div>
+
+
+					<!-- Button -->
+					<div class="mb-3 d-flex justify-content-center gap-2">
+
+						<button type="submit" class="btn btn-warning mt-2 mb-2">UPDATE</button>
+
+						<button type="reset" class="btn btn-danger mt-2 mb-2">RESET</button>
+
+						<a href="/tickets" style="text-decoration: none;">
+							<button type="button" class="btn btn-dark mt-2 mb-2">BACK</button>
+						</a>
+
+					</div>
+
+				</form>
+
+			</div>
+
+
+		</section>
+
+
+	</main>
+
+</body>
+
+
+<th:block th:replace="~{fragments/fragments :: scripts}">
+</th:block>
+
+
+</html>
