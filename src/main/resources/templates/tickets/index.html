@@ -21,7 +21,7 @@
 					<h1>Lista Tickets</h1>
 				</div>
 
-				
+
 				<!-- Condizione db popolato -->
 				<th:block th:if="${tickets.size > 0}">
 
@@ -60,23 +60,23 @@
 							<tbody>
 								<tr th:each="ticket : ${tickets}">
 
-									<!-- Id -->
+									<!-- Id note -->
 									<td class="d-none d-sm-table-cell" th:text="${ticket.id}"></td>
 
-									<!--Name -->
+									<!-- Name -->
 									<td th:text="${ticket.name}"></td>
 
 									<!-- Status -->
-									<td class="coll" th:text="${ticket.status}"></td>
+									<td th:text="${ticket.status}"></td>
 
 									<!-- Operator-->
 									<td class="d-none d-md-table-cell" th:text="${ticket.operator.getEmail()}"></td>
 
 									<!-- Note-->
-									<td class="d-none d-md-table-cell" th:if="${ticket.notes.size > 0}" th:text="${ticket.notes}"></td>
-									
+									<td class="d-none d-md-table-cell" th:if="${ticket.notes.size > 0}">YES</td>
+
 									<td class="d-none d-md-table-cell" th:unless="${ticket.notes.size > 0}">EMPTY</td>
-									
+
 									<!-- Button show -->
 									<td class="d-none d-md-table-cell">
 										<a th:href="@{/tickets/show/{id}(id=${ticket.id})}"
@@ -135,13 +135,15 @@
 									<td class="d-md-none d-flex flex-column gap-2 align-items-center">
 
 										<!-- Button show -->
-										<a th:href="@{/tickets/show/{id}(id=${ticket.id})}" style="text-decoration: none;">
+										<a th:href="@{/tickets/show/{id}(id=${ticket.id})}"
+											style="text-decoration: none;">
 											<button type="button" class="btn btn-success"
 												style="max-width: 80px;">SHOW</button>
 										</a>
 
 										<!-- Button update -->
-										<a th:href="@{/tickets/edit/{id}(id=${ticket.id})}" style="text-decoration: none;">
+										<a th:href="@{/tickets/edit/{id}(id=${ticket.id})}"
+											style="text-decoration: none;">
 											<button type="button" class="btn btn-warning"
 												style="max-width: 80px;">UPDATE</button>
 										</a>
@@ -196,7 +198,7 @@
 				</th:block>
 
 
-				<!--  CONDIZIONE DB NON POPOLATO -->
+				<!--  Condizione db non popolato -->
 				<th:block th:unless="${tickets.size > 0}">
 
 					<!-- Error -->
