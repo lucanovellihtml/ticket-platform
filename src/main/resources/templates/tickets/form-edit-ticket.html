@@ -29,9 +29,8 @@
 
 
 					<!-- Input id -->
-					<div class="mb-3 d-none">
-						<label for="id" class="form-label">Id ticket</label>
-						<input type="number" class="form-control" id="id" th:field="*{id}" th:value="*{id}"
+					<div class="mb-3">
+						<input type="hidden" class="form-control" id="id" th:field="*{id}" th:value="*{id}"
 							aria-label="readonly id ticket" readonly>
 					</div>
 
@@ -75,7 +74,7 @@
 
 					<!-- Input note -->
 					<div class="mb-3">
-						<a href="/tickets" style="text-decoration: none;">
+						<a th:href="@{/tickets/show/{id}/note(id=${ticket.id})}" style="text-decoration: none;">
 							<button type="button" class="btn btn-secondary mt-2 mb-2">ADD A NEW NOTE</button>
 						</a>
 					</div>
