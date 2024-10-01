@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.thymeleaf.org">
+
+<head th:insert="~{fragments/fragments :: head}">
+</head>
+
+
+<body>
+
+	<header th:insert="~{fragments/navbar :: navbar}">
+	</header>
+
+	<main>
+
+		<!-- Section table index -->
+		<section class="container-sm text-center">
+			<div class="row gap-5">
+
+				<!-- Title -->
+				<div class="col-12 pt-3">
+					<h1>Lista delle note del ticket</h1>
+				</div>
+
+				<!-- Button -->
+				<div class="col-12 pt-3 text-lg-end text-md-center">
+
+					<!-- Button back-->
+					<a th:href="@{/tickets/show/{id}(id=${ticket.id})}" style="text-decoration: none;">
+						<button type="button" class="btn btn-dark mt-2 mb-2">BACK</button>
+					</a>
+					
+					<!-- Button back-->
+					<a th:href="@{/tickets/show/{id}/note(id=${ticket.id})}" style="text-decoration: none;">
+						<button type="button" class="btn btn-success mt-2 mb-2">ADD A NEW NOTE</button>
+					</a>
+
+				</div>
+
+
+				<!-- Condizione db popolato -->
+				<th:block th:if="${listNotes.size > 0}">
+
+					<!-- Table -->
+					<div class="col-12">
+						<table class="table">
+
+							<!-- Columns -->
+							<thead>
+								<tr>
+									<th scope="col">#</th>
+									<th class="d-none d-md-table-cell" scope="col">Creator</th>
+									<th scope="col">Description</th>
+									<th scope="col">Creation Date</th>
+								</tr>
+							</thead>
+
+							<!-- Row -->
+							<tbody>
+								<tr th:each="note : ${listNotes}">
+
+									<!-- Id -->
+									<td th:text="${note.id}"></td>
+
+									<!-- Operator name -->
+									<td class="d-none d-md-table-cell" th:text="${note.ticket.operator.email}"></td>
+
+									<!-- Status -->
+									<td class="coll" th:text="${note.description}"></td>
+
+									<!-- Status -->
+									<td class="coll" th:text="${note.createAt}"></td>
+
+
+								</tr>
+							</tbody>
+
+						</table>
+					</div>
+
+				</th:block>
+
+
+				<!--  Condizione db non popolato -->
+				<th:block th:unless="${listNotes.size > 0}">
+
+					<!-- Error -->
+					<div class="col-12 justify-content-center position-absolute top-50 start-50 translate-middle">
+
+						<!-- Title -->
+						<h3 class="fw-bold pb-3">Note non presenti</h3>
+
+						<!-- Spinner -->
+						<div class="spinner-border" role="status">
+							<span class="visually-hidden">Loading...</span>
+						</div>
+
+					</div>
+
+				</th:block>
+
+			</div>
+		</section>
+
+
+	</main>
+
+</body>
+
+
+<th:block th:replace="~{fragments/fragments :: scripts}">
+</th:block>
+
+
+</html>
