@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.thymeleaf.org">
+
+<head th:insert="~{fragments/fragments :: head}">
+</head>
+
+
+<body>
+
+	<header th:insert="~{fragments/navbar :: navbar}">
+	</header>
+
+	<main>
+
+		<!-- Section form create -->
+		<section class="container text-center">
+			<div class="row gap-4 justify-content-center">
+
+				<!-- Title -->
+				<div class="col-12 pt-3 d-flex flex-column gap-3">
+					<h1>Creazione nota per il ticket</h1>
+					<p>Complete the form to create the note!!!</p>
+				</div>
+
+
+				<!-- Form create note -->
+				<form class="col-12 col-lg-6" id="form-create-note" th:object="${note}" th:action="@{/notes/create}"
+					method="POST">
+
+					<!-- Input id -->
+					<div class="mb-3">
+						<input type="hidden" class="form-control" aria-label="Disabled input name ticket of note"
+							th:field="*{ticket}" id="ticket" readonly>
+					</div>
+
+					<!-- Input name operator -->
+					<div class="mb-3">
+						<label for="nameOperator" class="form-label">Name Operator</label>
+						<input type="text" class="form-control"
+							aria-label="Disabled input name operator of note"
+							th:value="*{ticket.getOperator().getEmail()}" disabled>
+					</div>
+
+					<!-- Input ticket name selected -->
+					<div class="mb-3">
+						<label for="nameTicket" class="form-label">Name Ticket</label>
+						<input type="text" class="form-control" aria-label="Disabled input name ticket of note"
+							th:value="*{ticket.name}" disabled>
+					</div>
+
+					<!-- Input creation date now -->
+					<div class="mb-3">
+						<label for="createDate" class="form-label">Creation Date</label>
+						<input type="datetime" class="form-control" th:value="${currentDate}"
+							aria-label="readonly status note" readonly>
+					</div>
+
+
+					<!-- input description -->
+					<div class="mb-3">
+						<label for="description" class="form-label">Description</label>
+						<input type="text" class="form-control" id="description"
+							placeholder="Insert description of note" th:field="*{description}"
+							th:errorClass="is-invalid">
+
+						<!-- error input description -->
+						<div th:if="${#fields.hasErrors('description')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('description')}" th:text="${err}"></li>
+							</ul>
+						</div>
+
+					</div>
+
+					<!-- Button -->
+					<div class="mb-3 d-flex justify-content-center gap-2">
+
+						<button type="submit" class="btn btn-warning mt-2 mb-2">CREATE</button>
+
+						<button type="reset" class="btn btn-danger mt-2 mb-2">RESET</button>
+
+						<a href="/tickets" style="text-decoration: none;">
+							<button type="button" class="btn btn-dark mt-2 mb-2">BACK</button>
+						</a>
+
+					</div>
+
+				</form>
+
+			</div>
+
+
+		</section>
+
+
+	</main>
+
+</body>
+
+
+<th:block th:replace="~{fragments/fragments :: scripts}">
+</th:block>
+
+
+</html>
