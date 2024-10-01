@@ -1,5 +1,6 @@
 package com.lessons.java.spring.ticket.platform.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.lessons.java.spring.ticket.platform.model.Note;
 import com.lessons.java.spring.ticket.platform.model.Ticket;
-import com.lessons.java.spring.ticket.platform.service.OperatorService;
 import com.lessons.java.spring.ticket.platform.service.TicketService;
 
 import jakarta.validation.Valid;
@@ -25,9 +26,6 @@ public class TicketController {
 
 	@Autowired
 	private TicketService service;
-
-	@Autowired
-	private OperatorService serviceOperator;
 
 	/**
 	 * 
@@ -49,6 +47,24 @@ public class TicketController {
 		model.addAttribute("tickets", listTickets);
 
 		return "/tickets/index";
+
+	}
+
+	/**
+	 * 
+	 * @return la lista di tutte le note del ticket;
+	 */
+	@GetMapping("/show/{id}/list-notes-ticket")
+	public String showNotesOfTicket(@PathVariable("id") int id, Model model) {
+
+		// Lista delle note del ticket passata nel model
+		List<Note> listNotes = service.getById(id).getNotes();
+
+		model.addAttribute("listNotes", listNotes);
+
+		model.addAttribute("ticket", service.getById(id));
+
+		return "/tickets/show-notes-of-ticket";
 
 	}
 
@@ -105,6 +121,28 @@ public class TicketController {
 		service.update(formTicket);
 
 		return "redirect:/tickets";
+
+	}
+
+	/**
+	 * Creazione della nota relativa al ticket selezionato
+	 * 
+	 * @return form per la creazione della singola nota;
+	 */
+	@GetMapping("/show/{id}/note")
+	public String createNote(@PathVariable("id") int id, Model model) {
+
+		Note note = new Note();
+		Ticket ticket = service.getById(id);
+
+		// Aggiunta la data corrente al form per la creazione della nota
+		model.addAttribute("currentDate", LocalDate.now());
+
+		note.setTicket(ticket);
+
+		model.addAttribute("note", note);
+
+		return "/notes/form-create-note";
 
 	}
 
