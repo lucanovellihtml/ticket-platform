@@ -6,6 +6,9 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 //entità roles
+/**
+ * Relazionata con User(Admin-Operator) e Role
+ */
 @Entity
 @Table(name = "roles")
 public class Role {
@@ -15,8 +18,6 @@ public class Role {
 
 	@NotNull
 	private String name;
-
-	// TODO ricordarsi di aggiungere la relazione tra operator/admin e role
 
 	// getter - setter
 	public Integer getId() {
