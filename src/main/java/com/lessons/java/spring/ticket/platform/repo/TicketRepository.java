@@ -12,4 +12,9 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 	 * query custom per cercare il ticket tramite nome
 	 */
 	public List<Ticket> findByName(String name);
+	
+	/**
+	 * query custom per cercare il ticket tramite status
+	 */
+	public List<Ticket> findByStatus(String status);
 }
