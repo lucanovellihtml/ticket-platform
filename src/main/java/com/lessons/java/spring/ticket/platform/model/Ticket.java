@@ -2,6 +2,8 @@ package com.lessons.java.spring.ticket.platform.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,6 +36,7 @@ public class Ticket {
 	 * relazione dove un ticket puo' avere piu' zero,uno,molti note
 	 */
 	@OneToMany(mappedBy = "ticket", cascade = { CascadeType.REMOVE })
+	@JsonBackReference // permette di aggirare la ricorsione infinita tra le entità
 	private List<Note> notes;
 
 	/**
@@ -41,6 +44,7 @@ public class Ticket {
 	 */
 	@ManyToOne
 	@JoinColumn(name = "operator_id", nullable = false)
+	@JsonBackReference
 	private Operator operator;
 
 	// getter - setter
