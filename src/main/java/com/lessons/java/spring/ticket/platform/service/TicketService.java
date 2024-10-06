@@ -36,6 +36,17 @@ public class TicketService {
 
 	/**
 	 * 
+	 * @param status, filto di ricerca del ticket
+	 * @return la lista dei tickets che contentono lo status della ricerca
+	 */
+	public List<Ticket> findAllByStatus(String status) {
+
+		return repository.findByStatus(status);
+
+	}
+	
+	/**
+	 * 
 	 * @param id, id del ticket
 	 * @return tutte le informazioni del ticket specifico
 	 */
