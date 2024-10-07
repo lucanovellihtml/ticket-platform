@@ -28,7 +28,7 @@ public class Ticket {
 	@NotNull
 	@Size(min = 2, max = 255)
 	private String name;
-
+	
 	@NotNull
 	private String status;
 
@@ -40,13 +40,21 @@ public class Ticket {
 	private List<Note> notes;
 
 	/**
-	 * relazione dove un ticket puo' avere un solo operatore
+	 * relazione dove un ticket puo' avere un solo User
 	 */
 	@ManyToOne
-	@JoinColumn(name = "operator_id", nullable = false)
+	@JoinColumn(name = "user_id", nullable = false)
 	@JsonBackReference
-	private Operator operator;
+	private User user;
 
+	/**
+	 * relazione dove un ticket puo' avere una sola category
+	 */
+	@ManyToOne
+	@JoinColumn(name = "category_id", nullable = false)
+	@JsonBackReference
+	private Category category;
+	
 	// getter - setter
 	public Integer getId() {
 		return id;
@@ -80,12 +88,20 @@ public class Ticket {
 		this.notes = notes;
 	}
 
-	public Operator getOperator() {
-		return operator;
+	public User getUser() {
+		return user;
 	}
 
-	public void setOperator(Operator operator) {
-		this.operator = operator;
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 }
