@@ -39,10 +39,13 @@
 							<h5 class="card-title pt-3">STATUS</h5>
 							<p class="card-text" th:text="${ticket.status}"></p>
 
-							<!-- Operator -->
-							<h5 class="card-title pt-3">OPERATOR</h5>
-							<p class="card-text" th:text="${ticket.operator.getEmail()}"></p>
+							<!-- user -->
+							<h5 class="card-title pt-3">user</h5>
+							<p class="card-text" th:text="${ticket.user.getEmail()}"></p>
 
+							<!-- Category -->
+							<h5 class="card-title pt-3">CATEGORY</h5>
+							<p class="card-text" th:text="${ticket.category.getTitle()}"></p>
 
 							<!-- Note available -->
 							<!-- Title -->
@@ -59,7 +62,7 @@
 						<footer class="card-footer">
 
 							<!-- Button back/update -->
-							<a th:href="@{/tickets}" style="text-decoration: none;">
+							<a th:href="@{/tickets/list-tickets}" style="text-decoration: none;">
 								<button type="button" class="btn btn-dark mt-2 mb-2">BACK</button>
 							</a>
 

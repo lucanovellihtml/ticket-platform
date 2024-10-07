@@ -33,6 +33,12 @@
 						<input type="hidden" class="form-control" id="id" th:field="*{id}" th:value="*{id}"
 							aria-label="readonly id ticket" readonly>
 					</div>
+					
+					<!-- Input category -->
+					<div class="mb-3">
+						<input type="hidden" class="form-control" id="id_category" th:field="*{category}" th:value="*{category.getId()}"
+							aria-label="readonly id category" readonly>
+					</div>
 
 					<!-- Input name -->
 					<div class="mb-3">
@@ -79,18 +85,18 @@
 						</a>
 					</div>
 					
-					<!-- Input operator -->
+					<!-- Input user -->
 					<div class="mb-3 d-none">
-						<label for="operator" class="form-label">Operator</label>
-						<input type="number" class="form-control" id="operator" th:field="*{operator.id}"
-							th:value="*{operator.getId()}" aria-label="readonly operator" readonly>
+						<label for="user" class="form-label">user</label>
+						<input type="number" class="form-control" id="user" th:field="*{user.id}"
+							th:value="*{user.getId()}" aria-label="readonly user" readonly>
 					</div>
 
-					<!-- Input email operator -->
+					<!-- Input email user -->
 					<div class="mb-3">
-						<label for="operatorEmail" class="form-label">Operator</label>
-						<input type="email" class="form-control" id="operatorEmail" th:value="*{operator.getEmail()}"
-							aria-label="readonly operator email" disabled>
+						<label for="userEmail" class="form-label">user</label>
+						<input type="email" class="form-control" id="userEmail" th:value="*{user.getEmail()}"
+							aria-label="readonly user email" disabled>
 					</div>
 
 
@@ -101,7 +107,7 @@
 
 						<button type="reset" class="btn btn-danger mt-2 mb-2">RESET</button>
 
-						<a href="/tickets" style="text-decoration: none;">
+						<a href="/tickets/list-tickets" style="text-decoration: none;">
 							<button type="button" class="btn btn-dark mt-2 mb-2">BACK</button>
 						</a>
 

@@ -47,8 +47,9 @@
 									<th class="d-none d-sm-table-cell" scope="col">#</th>
 									<th scope="col">Name</th>
 									<th scope="col">Status</th>
-									<th class="d-none d-md-table-cell" scope="col">Operator</th>
+									<th class="d-none d-md-table-cell" scope="col">user</th>
 									<th class="d-none d-md-table-cell" scope="col">Note</th>
+									<th class="d-none d-md-table-cell" scope="col">Category</th>
 									<th class="d-none d-md-table-cell" scope="col">Show</th>
 									<th class="d-none d-md-table-cell" scope="col">Update</th>
 									<th class="d-none d-md-table-cell" scope="col">Delete</th>
@@ -69,13 +70,16 @@
 									<!-- Status -->
 									<td th:text="${ticket.status}"></td>
 
-									<!-- Operator-->
-									<td class="d-none d-md-table-cell" th:text="${ticket.operator.getEmail()}"></td>
+									<!-- user-->
+									<td class="d-none d-md-table-cell" th:text="${ticket.user.getEmail()}"></td>
 
 									<!-- Note-->
 									<td class="d-none d-md-table-cell" th:if="${ticket.notes.size > 0}">YES</td>
 
 									<td class="d-none d-md-table-cell" th:unless="${ticket.notes.size > 0}">EMPTY</td>
+
+									<!-- Category -->
+									<td class="d-none d-md-table-cell" th:text="${ticket.category.getTitle()}"></td>
 
 									<!-- Button show -->
 									<td class="d-none d-md-table-cell">

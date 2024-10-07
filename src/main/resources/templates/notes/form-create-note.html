@@ -33,12 +33,12 @@
 							th:field="*{ticket}" id="ticket" readonly>
 					</div>
 
-					<!-- Input name operator -->
+					<!-- Input name user -->
 					<div class="mb-3">
-						<label for="nameOperator" class="form-label">Name Operator</label>
+						<label for="nameuser" class="form-label">Name user</label>
 						<input type="text" class="form-control"
-							aria-label="Disabled input name operator of note"
-							th:value="*{ticket.getOperator().getEmail()}" disabled>
+							aria-label="Disabled input name user of note"
+							th:value="*{ticket.getuser().getEmail()}" disabled>
 					</div>
 
 					<!-- Input ticket name selected -->
