@@ -45,6 +45,7 @@ public class TicketService {
 
 	}
 	
+
 	/**
 	 * 
 	 * @param id, id del ticket
@@ -65,5 +66,17 @@ public class TicketService {
 		return repository.save(ticket);
 
 	}
+	
+
+	/**
+	 * @param id, l'id del ticket che deve essere elimianto
+	 */
+	public void delete(int id) {
+
+		repository.deleteById(id);
+		
+	}
+	
+	
 
 }
