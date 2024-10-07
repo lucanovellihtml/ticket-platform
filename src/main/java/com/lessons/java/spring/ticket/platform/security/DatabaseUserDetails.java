@@ -11,6 +11,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.lessons.java.spring.ticket.platform.model.Role;
 import com.lessons.java.spring.ticket.platform.model.User;
 
+/**
+ * Classe con il metodo per restituire le informazioni dell'user associato ai suoi ruoli
+ */
 public class DatabaseUserDetails implements UserDetails {
 
 	private final Integer id;
@@ -30,27 +33,24 @@ public class DatabaseUserDetails implements UserDetails {
 		}
 	}
 
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
 		return this.authorities;
 	}
 
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
 		return this.password;
 	}
 
 	
 	public String getEmail() {
-		// TODO Auto-generated method stub
 		return this.email;
 	}
 
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

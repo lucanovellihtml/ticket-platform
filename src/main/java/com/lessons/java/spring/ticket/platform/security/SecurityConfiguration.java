@@ -10,29 +10,47 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
- * Classe di configurazione per il sistema di sicurezza di autenticazione e
- * autorizzazione
+ * Classe di configurazione per il sistema di sicurezza di autenticazione e autorizzazione
  */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
 
+	/*
+	 * Aggiunto il csrf().disable() per accede a una risorsa senza autorizzazione
+	 */
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests().requestMatchers("/**").permitAll().and().formLogin().and().logout().and().exceptionHandling();
+		http.authorizeHttpRequests().requestMatchers("/tickets/**", "/notes/**").hasAuthority("ADMIN")
+				.requestMatchers("/notes/**").hasAuthority("OPERATOR")
+				.requestMatchers("/**").permitAll()
+				.and().formLogin()
+				.and().logout()
+				.and().exceptionHandling()
+				.and().csrf().disable();
 		return http.build();
 	}
 
+	/**
+	 * il metodo delega la procedura di codifica della password al database
+	 * 
+	 * @return la password codificata
+	 */
 	@Bean
 	DatabaseUserDetailsService userDetailsService() {
 		return new DatabaseUserDetailsService();
 	}
-
+	
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
 
+	/**
+	 * Metodo per gestire l'autenticazione su database
+	 * @return l'oggetto provider che mette insieme i le informazioni dell'user passato nel form login con la relativa password,
+	 * per eseguire la query per autenticare l'user
+	 */
 	@Bean
 	DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
