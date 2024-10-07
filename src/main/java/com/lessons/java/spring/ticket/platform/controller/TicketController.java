@@ -32,7 +32,7 @@ public class TicketController {
 	 * @return la lista di tutti i tickets senza filtro;
 	 * @return la lista dei tickets filtrati;
 	 */
-	@GetMapping
+	@GetMapping("/list-tickets")
 	public String index(@RequestParam(name = "name", required = false) String name, Model model) {
 
 		// Prendo i dati da mostrare a "/tickets/index":
@@ -120,7 +120,7 @@ public class TicketController {
 
 		service.update(formTicket);
 
-		return "redirect:/tickets";
+		return "redirect:/tickets/list-tickets";
 
 	}
 
@@ -143,6 +143,20 @@ public class TicketController {
 		model.addAttribute("note", note);
 
 		return "/notes/form-create-note";
+
+	}
+	
+	/**
+	 * Elimina il ticket selezionato;
+	 * @return la lista dei tickets aggiornata;
+	 */
+	@PostMapping("/delete/{id}")
+	public String delete(@PathVariable("id") int id) {
+
+		// Elimino i dati dal repository;
+		service.delete(id);
+
+		return "redirect:/tickets/list-tickets";
 
 	}
 
