@@ -23,13 +23,14 @@ public class TicketRestController {
 
 	@Autowired
 	private TicketService service;
+	
 
 	/**
 	 * Metodo che restituisce tutti i ticket presenti nel repository
 	 * 
 	 * @return la lista dei tickets presenti nel repository
 	 */
-	@GetMapping
+	@GetMapping("list-tickets")
 	public List<Ticket> index() {
 
 		List<Ticket> listTickets;
@@ -60,5 +61,6 @@ public class TicketRestController {
 		return listTickets;
 
 	}
+	
 
 }
