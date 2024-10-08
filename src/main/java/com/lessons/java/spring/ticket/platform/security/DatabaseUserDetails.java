@@ -51,7 +51,7 @@ public class DatabaseUserDetails implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return null;
+		return this.email;
 	}
 
 	public Integer getId() {
