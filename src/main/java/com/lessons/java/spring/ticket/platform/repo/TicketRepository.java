@@ -17,5 +17,5 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 	 * query custom per cercare il ticket tramite status
 	 */
 	public List<Ticket> findByStatus(String status);
-	
+
 }
