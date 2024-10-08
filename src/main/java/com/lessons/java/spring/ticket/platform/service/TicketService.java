@@ -28,9 +28,9 @@ public class TicketService {
 	 * @param name, filto di ricerca del ticket
 	 * @return la lista dei tickets che contentono il nome della ricerca
 	 */
-	public List<Ticket> findAllByName(String name) {
+	public List<Ticket> findAllByNameContains(String name) {
 
-		return repository.findByName(name);
+		return repository.findByNameContains(name);
 
 	}
 
@@ -66,6 +66,17 @@ public class TicketService {
 		return repository.save(ticket);
 
 	}
+	
+	/**
+	 * @param ticket, l'oggeto pizza che deve essere creato
+	 * @return il repository aggiornato
+	 */
+	public Ticket create(Ticket ticket) {
+
+		return repository.save(ticket);
+
+	}
+	
 	
 
 	/**
