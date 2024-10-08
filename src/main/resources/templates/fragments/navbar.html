@@ -9,7 +9,7 @@
 			<div class="container-fluid">
 
 				<!-- Title-->
-				<a class="navbar-brand" th:href="@{/tickets}">Tickets</a>
+				<a class="navbar-brand" th:href="@{/tickets/list-tickets}">Tickets</a>
 
 				<!-- Title -->
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -19,21 +19,39 @@
 
 				<!-- Menu' -->
 				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul class="navbar-nav">
+					<ul class="navbar-nav gap-2">
 
 						<!-- List tickets -->
 						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" th:href="@{/tickets}">List Tickets</a>
+							<a class="nav-link active" aria-current="page" th:href="@{/tickets/list-tickets}">List Tickets</a>
 						</li>
 
 						<!-- Create tickets -->
 						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" th:href="@{/pizze/create}">Create Tickets</a>
+							<a class="nav-link active" aria-current="page" th:href="@{/tickets/create}">Create Tickets</a>
 						</li>
 
+						<!-- Check of logged user -->
+						<li class="nav-item d-sm-block d-md-none fw-bold pt-2" sec:authorize="hasAuthority('ADMIN')">
+							ADMIN : <span sec:authentication="name"></span>
+						</li>
+
+						<li class="nav-item d-sm-block d-md-none fw-bold pt-2" sec:authorize="hasAuthority('OPERATOR')">
+							OPERATOR : <span sec:authentication="name"></span>
+						</li>
+						
 					</ul>
 				</div>
-
+				
+				<!-- Check of logged user -->
+				<div class="d-none d-md-block fw-bold" sec:authorize="hasAuthority('ADMIN')">
+					ADMIN : <span sec:authentication="name"></span>
+				</div>
+				
+				<div class="d-none d-md-block fw-bold" sec:authorize="hasAuthority('OPERATOR')">
+					OPERATOR : <span sec:authentication="name"></span>
+				</div>
+				
 			</div>
 		</nav>
 	</header>
