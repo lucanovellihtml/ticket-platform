@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.thymeleaf.org">
+
+<head th:insert="~{fragments/fragments :: head}">
+</head>
+
+
+<body>
+
+	<header th:insert="~{fragments/navbar :: navbar}">
+	</header>
+
+	<main>
+
+		<!-- Section form create -->
+		<section class="container text-center">
+			<div class="row gap-4 justify-content-center">
+
+				<!-- Title -->
+				<div class="col-12 pt-3 d-flex flex-column gap-3">
+					<h1>Crea ticket</h1>
+					<p>Complete the form to create a ticket!!!</p>
+				</div>
+
+
+				<!-- Form create ticket -->
+				<form class="col-12 col-lg-6" id="form-create-ticket" th:object="${ticket}"
+					th:action="@{/tickets/create}" method="POST">
+					
+					<!-- Input name -->
+					<div class="mb-3">
+						<label for="name" class="form-label fw-bold">Name</label>
+						<input type="text" class="form-control" id="name" placeholder="Insert name of ticket" aria-label="name"
+							aria-describedby="name-ticket" th:field="*{name}" th:errorClass="is-invalid">
+					
+						<!-- Error input -->
+						<div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+							</ul>
+						</div>
+						
+					</div>
+					
+					<!-- Input category-->
+					<div class="mb-3">
+						<span class="fw-bold">Choose category</span>
+						<div class="form-check d-flex text-start gap-2" th:each="category : ${categories}">
+							<input class="form-check-input" type="radio" name="category" th:value="${category.id}"
+								th:id="'category_' + ${category.id}" th:field="*{category}">
+							<label class="form-check-label" th:for="'category_' + ${category.id}" th:text="${category.title}">
+							</label>
+						</div>
+					</div>
+
+					<!-- Input status -->
+					<div class="mb-3">
+						<span class="fw-bold">Choose status</span>
+						<div class="form-check d-flex text-start gap-2">
+							<input class="form-check-input" type="radio" name="status" id="status" value="Da fare" th:field="*{status}">
+							<label class="form-check-label" for="status">
+								Da fare
+							</label>
+						</div>
+						<div class="form-check d-flex text-start gap-2">
+							<input class="form-check-input" type="radio" name="status" id="status" value="In corso" th:field="*{status}" checked>
+							<label class="form-check-label" for="status">
+								In corso
+							</label>
+						</div>
+						<div class="form-check d-flex text-start gap-2">
+							<input class="form-check-input" type="radio" name="status" id="status" value="Completato" th:field="*{status}">
+							<label class="form-check-label" for="status">
+								Completato
+							</label>
+						</div>
+					</div>
+	
+					<!-- Input user -->
+					<div class="mb-3">
+						<span class="fw-bold">Choose operator active</span>
+						<div class="form-check d-flex text-start gap-2" th:each="user : ${users}">
+							<input class="form-check-input" type="radio" name="user" th:value="${user.id}" th:id="'user_' + ${user.id}"
+								th:field="*{user}">
+							<label class="form-check-label" th:for="'user_' + ${user.id}" th:text="${user.email}">
+							</label>
+						</div>
+					</div>
+					
+
+
+
+					<!-- Button -->
+					<div class="mb-3 d-flex justify-content-center gap-2">
+
+						<button type="submit" class="btn btn-warning mt-2 mb-2">CREATE</button>
+
+						<button type="reset" class="btn btn-danger mt-2 mb-2">RESET</button>
+
+						<a href="/tickets/list-tickets" style="text-decoration: none;">
+							<button type="button" class="btn btn-dark mt-2 mb-2">BACK</button>
+						</a>
+
+					</div>
+
+				</form>
+
+			</div>
+
+
+		</section>
+
+
+	</main>
+
+</body>
+
+
+<th:block th:replace="~{fragments/fragments :: scripts}">
+</th:block>
+
+
+</html>

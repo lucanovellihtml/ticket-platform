@@ -28,7 +28,7 @@
 					<a th:href="@{/tickets/show/{id}(id=${ticket.id})}" style="text-decoration: none;">
 						<button type="button" class="btn btn-dark mt-2 mb-2">BACK</button>
 					</a>
-					
+
 					<!-- Button back-->
 					<a th:href="@{/tickets/show/{id}/note(id=${ticket.id})}" style="text-decoration: none;">
 						<button type="button" class="btn btn-success mt-2 mb-2">ADD A NEW NOTE</button>
@@ -51,6 +51,7 @@
 									<th class="d-none d-md-table-cell" scope="col">Creator</th>
 									<th scope="col">Description</th>
 									<th scope="col">Creation Date</th>
+									<th class="d-none d-md-table-cell" scope="col">Delete</th>
 								</tr>
 							</thead>
 
@@ -70,7 +71,47 @@
 									<!-- Status -->
 									<td class="coll" th:text="${note.createAt}"></td>
 
+									<!-- Button modal -->
+									<td class="d-none d-md-table-cell">
+										<!-- Button trigger modal -->
+										<button type="button" class="btn btn-danger" data-bs-toggle="modal"
+											th:data-bs-target="'#modal-delete-' + ${note.id}">
+											DELETE
+										</button>
 
+										<!-- Modal -->
+										<div class="modal fade" th:id="'modal-delete-' + ${note.id}" tabindex="-1"
+											aria-labelledby="modal-delete" aria-hidden="true">
+											<div class="modal-dialog modal-fullscreen-sm-down">
+												<div class="modal-content">
+
+													<div class="modal-header">
+														<h1 class="modal-title fs-5" id="exampleModalLabel">ARE YOU SURE
+															OF DELETE THIS NOTE?</h1>
+														<button type="button" class="btn-close" data-bs-dismiss="modal"
+															aria-label="Close"></button>
+													</div>
+
+													<div class="modal-body">
+														Deleting note...
+													</div>
+
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary"
+															data-bs-dismiss="modal">NO</button>
+
+														<!-- Form delete button -->
+														<form class="d-inline-block"
+															th:action="@{/notes/delete/{id}(id=${note.id})}"
+															method="POST">
+															<button type="submit" class="btn btn-danger">YES</button>
+														</form>
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</td>
 								</tr>
 							</tbody>
 
