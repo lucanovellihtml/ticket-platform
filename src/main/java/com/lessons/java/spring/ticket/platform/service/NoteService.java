@@ -21,5 +21,26 @@ public class NoteService {
 		return repository.save(note);
 
 	}
+	
+	/**
+	 * 
+	 * @param id, id della nota
+	 * @return tutte le informazioni della nota specifica
+	 */
+	public Note getById(int id) {
+
+		return repository.findById(id).get();
+
+	}
+	
+	/**
+	 * @param id, l'id della nota che deve essere eliminata
+	 */
+	public void delete(int id) {
+
+		repository.deleteById(id);
+		
+	}
+	
 
 }
