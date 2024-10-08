@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.lessons.java.spring.ticket.platform.model.Note;
 import com.lessons.java.spring.ticket.platform.model.Ticket;
+import com.lessons.java.spring.ticket.platform.service.CategoryService;
 import com.lessons.java.spring.ticket.platform.service.TicketService;
+import com.lessons.java.spring.ticket.platform.service.UserService;
 
 import jakarta.validation.Valid;
 
@@ -26,6 +28,14 @@ public class TicketController {
 
 	@Autowired
 	private TicketService service;
+	
+	//Service per le categories
+	@Autowired
+	private CategoryService serviceCategory;
+	
+	//Service per gli users
+	@Autowired
+	private UserService serviceUser;
 
 	/**
 	 * 
@@ -39,7 +49,7 @@ public class TicketController {
 		List<Ticket> listTickets;
 
 		if (name != null && !name.isEmpty())
-			listTickets = service.findAllByName(name);
+			listTickets = service.findAllByNameContains(name);
 		else
 			listTickets = service.findAllTickets();
 
@@ -155,6 +165,48 @@ public class TicketController {
 
 		// Elimino i dati dal repository;
 		service.delete(id);
+
+		return "redirect:/tickets/list-tickets";
+
+	}
+	
+	/**
+	 * Metodo per la creazione del ticket
+	 * @return restituisce il form per la creazione del ticket;
+	 */
+	@GetMapping("/create")
+	public String create(Model model) {
+
+		// Inserisco l'oggetto ticket vuoto per permettere di richiamare sempre la pagina senza dati
+		model.addAttribute("ticket", new Ticket());
+
+		// Mostro l'elenco delle categories disponibili;
+		model.addAttribute("categories", serviceCategory.findAllCategories());
+		
+		// Mostro l'elenco degli users disponibili con lo stato a true;
+		model.addAttribute("users", serviceUser.findAllUsersStatusTrue(true));
+
+		return "/tickets/form-create-ticket";
+
+	}
+
+	/**
+	 * Memorizza i dati del ticket passati dal form della create
+	 * @return se i dati della form sono sbagliati, restituisce il form della create da ricompilare
+	 * @return una volta salvato il ticket nuovo, viene restituita la lista dei tickets
+	 */
+	@PostMapping("/create")
+	public String store(@Valid @ModelAttribute("ticket") Ticket formTicket, BindingResult bindingResult, Model model) {
+
+		// Controllo se i campi compilati sono errati
+		if (bindingResult.hasErrors()) {
+			//Inserisco i dati nel model anche nella store perchè se si riaggiona la pagina, i campi vengono sbiancati
+			model.addAttribute("categories", serviceCategory.findAllCategories());
+			model.addAttribute("users", serviceUser.findAllUsersStatusTrue(true));
+			return "/tickets/form-create-ticket";
+		}
+
+		service.create(formTicket);
 
 		return "redirect:/tickets/list-tickets";
 
