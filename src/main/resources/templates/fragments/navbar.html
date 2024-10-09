@@ -5,7 +5,7 @@
 <body>
 
 	<header>
-		<nav th:fragment="navbar" class="navbar navbar-expand-sm bg-body-tertiary">
+		<nav th:fragment="navbar(userId)" class="navbar navbar-expand-sm bg-body-tertiary">
 			<div class="container-fluid">
 
 				<!-- Title-->
@@ -23,12 +23,14 @@
 
 						<!-- List tickets -->
 						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" th:href="@{/tickets/list-tickets}">List Tickets</a>
+							<a class="nav-link active" aria-current="page" th:href="@{/tickets/list-tickets}">List
+								Tickets</a>
 						</li>
 
 						<!-- Create tickets -->
 						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" th:href="@{/tickets/create}" sec:authorize="hasAuthority('ADMIN')">Create Tickets</a>
+							<a class="nav-link active" aria-current="page" th:href="@{/tickets/create}"
+								sec:authorize="hasAuthority('ADMIN')">Create Tickets</a>
 						</li>
 
 						<!-- Check of logged user -->
@@ -36,22 +38,63 @@
 							ADMIN : <span sec:authentication="name"></span>
 						</li>
 
+						<!-- Check of logged user -->
 						<li class="nav-item d-sm-block d-md-none fw-bold pt-2" sec:authorize="hasAuthority('OPERATOR')">
 							OPERATOR : <span sec:authentication="name"></span>
 						</li>
-						
+
+						<!-- Profile settings -->
+						<a th:href="@{/users/user-profile/edit/{id}(id=userId)}" style="text-decoration: none;">
+							<li class="nav-item d-sm-block d-md-none fw-bold pt-2"
+								sec:authorize="hasAuthority('OPERATOR')">
+								Profile Settings
+							</li>
+						</a>
+
+						<!-- Exit -->
+						<li class="nav-item d-sm-block d-md-none fw-bold pt-2" sec:authorize="hasAuthority('OPERATOR')">
+							Exit
+						</li>
+
 					</ul>
 				</div>
-				
+
+
 				<!-- Check of logged user -->
 				<div class="d-none d-md-block fw-bold" sec:authorize="hasAuthority('ADMIN')">
 					ADMIN : <span sec:authentication="name"></span>
 				</div>
-				
-				<div class="d-none d-md-block fw-bold" sec:authorize="hasAuthority('OPERATOR')">
-					OPERATOR : <span sec:authentication="name"></span>
+
+				<div class="d-none d-md-flex fw-bold gap-2 align-items-center" sec:authorize="hasAuthority('OPERATOR')">
+
+					<!-- Setting logged user -->
+					<div class="btn-group">
+
+						<!-- Button -->
+						<button type="button" class="btn btn-sm btn-dark dropdown-toggle" data-bs-toggle="dropdown"
+							aria-expanded="false">
+							Setting
+						</button>
+
+						<!-- Menu -->
+						<ul class="dropdown-menu">
+							
+							<!-- Profile settings -->
+							<a th:href="@{/users/user-profile/edit/{id}(id=${userId})}" style="text-decoration: none;">
+								<li class="dropdown-item">
+									Profile Settings
+								</li>
+							</a>
+							<li><a class="dropdown-item" href="#">Exit</a></li>
+						</ul>
+
+					</div>
+
+					<div>
+						OPERATOR : <span sec:authentication="name"></span>
+					</div>
 				</div>
-				
+
 			</div>
 		</nav>
 	</header>
