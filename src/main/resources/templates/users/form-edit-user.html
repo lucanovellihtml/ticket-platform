@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.thymeleaf.org">
+
+<head th:insert="~{fragments/fragments :: head}">
+</head>
+
+
+<body>
+
+	<header th:insert="~{fragments/navbar :: navbar(userId=${usernameId})}">
+	</header>
+
+	<main>
+
+		<!-- Section form update -->
+		<section class="container text-center">
+			<div class="row gap-4 justify-content-center">
+
+				<!-- Title -->
+				<div class="col-12 pt-3 d-flex flex-column gap-3">
+					<h1>My profile</h1>
+					<p>This is my profile information</p>
+				</div>
+
+
+				<!-- Form edit user -->
+				<form class="col-12 col-lg-6" id="form-update-user" th:object="${user}"
+					th:action="@{/users/user-profile/edit/{id}(id=${user.id})}" method="POST">
+
+
+					<!-- Input id -->
+					<div class="mb-3">
+						<input type="hidden" class="form-control" id="id" th:field="*{id}" th:value="*{id}"
+							aria-label="readonly id user" readonly>
+					</div>
+
+					<!-- Input role -->
+					<div class="mb-3">
+						<input type="hidden" class="form-control" id="roles" th:field="*{roles}" th:value="*{roles}"
+							aria-label="readonly role user" readonly>
+					</div>
+
+					<!-- Input tickets -->
+					<div class="mb-3">
+						<input type="hidden" class="form-control" id="tickets" th:field="*{tickets}"
+							th:value="*{tickets}" aria-label="readonly tickets user" readonly>
+					</div>
+
+					<!-- Email -->
+					<div class="mb-3">
+						<label for="email" class="form-label">Email address</label>
+						<input type="email" class="form-control" id="email" th:field="*{email}" th:value="*{email}">
+					</div>
+
+					<!-- Password -->
+					<div class="mb-3">
+						<label for="password" class="form-label">Password</label>
+						<input type="password" class="form-control" id="password" th:field="*{password}" placeholder="***************"
+							th:value="*{password}" h:errorClass="is-invalid">
+
+						<!-- Error input -->
+						<div th:if="${#fields.hasErrors('password')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('password')}" th:text="${err}" ></li>
+							</ul>
+						</div>
+					</div>
+
+					<!-- Status -->
+					<div class="form-check form-switch mt-3 mb-3 text-start">
+						<input class="form-check-input" type="checkbox" role="switch" id="status" th:value="*{status}"
+							th:field="*{status}">
+						<label class="form-check-label text-start" for="status">Not available</label>
+					</div>
+
+					<!-- Button -->
+					<div class="mb-3 d-flex justify-content-center gap-2">
+
+						<button type="submit" class="btn btn-warning mt-2 mb-2">SAVE</button>
+
+						<a th:href="@{/tickets/list-tickets}" style="text-decoration: none;">
+							<button type="button" class="btn btn-dark mt-2 mb-2">BACK</button>
+						</a>
+
+					</div>
+
+				</form>
+
+			</div>
+
+
+		</section>
+
+
+	</main>
+
+</body>
+
+
+<th:block th:replace="~{fragments/fragments :: scripts}">
+</th:block>
+
+
+</html>
