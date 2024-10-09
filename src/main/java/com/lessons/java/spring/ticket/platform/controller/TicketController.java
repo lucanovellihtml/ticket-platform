@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.lessons.java.spring.ticket.platform.model.Note;
 import com.lessons.java.spring.ticket.platform.model.Ticket;
+import com.lessons.java.spring.ticket.platform.model.User;
 import com.lessons.java.spring.ticket.platform.service.CategoryService;
 import com.lessons.java.spring.ticket.platform.service.TicketService;
 import com.lessons.java.spring.ticket.platform.service.UserService;
@@ -50,8 +51,15 @@ public class TicketController {
 		// Prendo i dati da mostrare a "/tickets/index":
 		List<Ticket> listTickets;
 
+		
 		// Inserisco le informazioni dello user autenticato
 		model.addAttribute("username", authentication.getName());
+		
+		for(User user : serviceUser.findAllUsers()) {
+			if(authentication.getName().equals(user.getEmail()))
+				model.addAttribute("usernameId", user.getId());
+		}
+		
 
 		if (name != null && !name.isEmpty())
 			listTickets = service.findAllByNameContains(name);
@@ -117,7 +125,7 @@ public class TicketController {
 	}
 
 	/**
-	 * Memorizzazione della singola pizza modificata nel form
+	 * Memorizzazione della singola ticket modificata nel form
 	 * 
 	 * @return Se i dati sono sbagliati, viene riproposto il form da ricompilare
 	 * @return Una volta salvati i dati, viene restituita la lista dei ticket
