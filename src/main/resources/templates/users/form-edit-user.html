@@ -55,19 +55,27 @@
 					<!-- Password -->
 					<div class="mb-3">
 						<label for="password" class="form-label">Password</label>
-						<input type="password" class="form-control" id="password" th:field="*{password}" placeholder="***************"
-							th:value="*{password}" h:errorClass="is-invalid">
+						<input type="password" class="form-control" id="password" th:field="*{password}"
+							placeholder="***************" th:value="*{password}" h:errorClass="is-invalid">
 
 						<!-- Error input -->
 						<div th:if="${#fields.hasErrors('password')}" class="invalid-feedback">
 							<ul>
-								<li th:each="err : ${#fields.errors('password')}" th:text="${err}" ></li>
+								<li th:each="err : ${#fields.errors('password')}" th:text="${err}"></li>
 							</ul>
 						</div>
 					</div>
 
 					<!-- Status -->
-					<div class="form-check form-switch mt-3 mb-3 text-start">
+					<div class="form-check form-switch mt-3 mb-3 text-start" th:if="${checkStatus != true}">
+						<input class="form-check-input" type="checkbox" role="switch" id="status" th:value="*{status}"
+							th:field="*{status}" disabled>
+						<label class="form-check-label text-start" for="status">Not available</label>
+					</div>
+
+					<!-- Status -->
+					<div class="form-check form-switch mt-3 mb-3 text-start"
+						th:unless="${checkStatus != true}">
 						<input class="form-check-input" type="checkbox" role="switch" id="status" th:value="*{status}"
 							th:field="*{status}">
 						<label class="form-check-label text-start" for="status">Not available</label>
