@@ -55,6 +55,7 @@ public class TicketController {
 		// Inserisco le informazioni dello user autenticato
 		model.addAttribute("username", authentication.getName());
 		
+		// Logica per passare il parametro ,dello user autenticato , nel nav per impostare il bottone setting
 		for(User user : serviceUser.findAllUsers()) {
 			if(authentication.getName().equals(user.getEmail()))
 				model.addAttribute("usernameId", user.getId());
@@ -78,8 +79,14 @@ public class TicketController {
 	 * @return la lista di tutte le note del ticket;
 	 */
 	@GetMapping("/show/{id}/list-notes-ticket")
-	public String showNotesOfTicket(@PathVariable("id") int id, Model model) {
+	public String showNotesOfTicket(@PathVariable("id") int id, Model model, Authentication authentication) {
 
+		// Logica per passare il parametro ,dello user autenticato , nel nav per impostare il bottone setting
+		for(User user : serviceUser.findAllUsers()) {
+			if(authentication.getName().equals(user.getEmail()))
+				model.addAttribute("usernameId", user.getId());
+		}
+		
 		// Lista delle note del ticket passata nel model
 		List<Note> listNotes = service.getById(id).getNotes();
 
@@ -96,8 +103,14 @@ public class TicketController {
 	 * @return Il singolo ticket;
 	 */
 	@GetMapping("/show/{id}")
-	public String showSingleTicket(@PathVariable("id") int id, Model model) {
+	public String showSingleTicket(@PathVariable("id") int id, Model model, Authentication authentication) {
 
+		// Logica per passare il parametro ,dello user autenticato , nel nav per impostare il bottone setting
+		for(User user : serviceUser.findAllUsers()) {
+			if(authentication.getName().equals(user.getEmail()))
+				model.addAttribute("usernameId", user.getId());
+		}
+		
 		model.addAttribute("ticket", service.getById(id));
 
 		return "/tickets/single-ticket";
@@ -111,8 +124,14 @@ public class TicketController {
 	 * 
 	 */
 	@GetMapping("/edit/{id}")
-	public String edit(@PathVariable("id") int id, Model model) {
+	public String edit(@PathVariable("id") int id, Model model, Authentication authentication) {
 
+		// Logica per passare il parametro ,dello user autenticato , nel nav per impostare il bottone setting
+		for(User user : serviceUser.findAllUsers()) {
+			if(authentication.getName().equals(user.getEmail()))
+				model.addAttribute("usernameId", user.getId());
+		}
+		
 		model.addAttribute("ticket", service.getById(id));
 
 		String status = service.getById(id).getStatus();
@@ -153,8 +172,14 @@ public class TicketController {
 	 * @return form per la creazione della singola nota;
 	 */
 	@GetMapping("/show/{id}/note")
-	public String createNote(@PathVariable("id") int id, Model model) {
-
+	public String createNote(@PathVariable("id") int id, Model model, Authentication authentication) {
+		
+		// Logica per passare il parametro ,dello user autenticato , nel nav per impostare il bottone setting
+		for(User user : serviceUser.findAllUsers()) {
+			if(authentication.getName().equals(user.getEmail()))
+				model.addAttribute("usernameId", user.getId());
+		}
+		
 		Note note = new Note();
 		Ticket ticket = service.getById(id);
 
@@ -190,8 +215,14 @@ public class TicketController {
 	 * @return restituisce il form per la creazione del ticket;
 	 */
 	@GetMapping("/create")
-	public String create(Model model) {
+	public String create(Model model, Authentication authentication) {
 
+		// Logica per passare il parametro ,dello user autenticato , nel nav per impostare il bottone setting
+		for(User user : serviceUser.findAllUsers()) {
+			if(authentication.getName().equals(user.getEmail()))
+				model.addAttribute("usernameId", user.getId());
+		}
+		
 		// Inserisco l'oggetto ticket vuoto per permettere di richiamare sempre la
 		// pagina senza dati
 		model.addAttribute("ticket", new Ticket());
@@ -199,8 +230,8 @@ public class TicketController {
 		// Mostro l'elenco delle categories disponibili;
 		model.addAttribute("categories", serviceCategory.findAllCategories());
 
-		// Mostro l'elenco degli users disponibili con lo stato a true;
-		model.addAttribute("users", serviceUser.findAllUsersStatusTrue(true));
+		// Mostro l'elenco degli users disponibili con lo stato a false;
+		model.addAttribute("users", serviceUser.findAllUsersStatusFalse(false));
 
 		return "/tickets/form-create-ticket";
 
@@ -222,7 +253,7 @@ public class TicketController {
 			// Inserisco i dati nel model anche nella store perchè se si riaggiona la
 			// pagina, i campi vengono sbiancati
 			model.addAttribute("categories", serviceCategory.findAllCategories());
-			model.addAttribute("users", serviceUser.findAllUsersStatusTrue(true));
+			model.addAttribute("users", serviceUser.findAllUsersStatusFalse(false));
 			return "/tickets/form-create-ticket";
 		}
 
