@@ -26,9 +26,9 @@ public class UserService {
 	
 	/**
 	 * 
-	 * @return la lista dei Users presenti nel repository con lo status a true
+	 * @return la lista dei Users presenti nel repository con lo status a false(quindi sono attivi per prendere il ticket)
 	 */
-	public List<User> findAllUsersStatusTrue(Boolean status) {
+	public List<User> findAllUsersStatusFalse(Boolean status) {
 		
 		return repository.findByStatus(status);
 
