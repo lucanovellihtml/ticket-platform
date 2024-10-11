@@ -1,5 +1,6 @@
 package com.lessons.java.spring.ticket.platform.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,31 @@ public class TicketService {
 	}
 
 	/**
+	 * @param category, filtro della ricerca del ticket
+	 * @return la lista dei tickets con il filtro sulla category
+	 */
+	public List<Ticket> findAllByCategory(String category) {
+
+		List<Ticket> listTicketsAll;
+		List<Ticket> listTicketsFilter = new ArrayList<Ticket>();
+
+		listTicketsAll = repository.findAll();
+
+		for (Ticket ticket : listTicketsAll) {
+
+			// Controllo se il singolo ticket ciclato ha il titolo dell'input category
+			// uguale
+			// Se supera la condizione, viene popolato la lista nuova filtrata
+			if (ticket.getCategory().getTitle().equals(category))
+				listTicketsFilter.add(ticket);
+
+		}
+
+		return listTicketsFilter;
+
+	}
+
+	/**
 	 * 
 	 * @param name, filto di ricerca del ticket
 	 * @return la lista dei tickets che contentono il nome della ricerca
@@ -33,7 +59,7 @@ public class TicketService {
 		return repository.findByNameContains(name);
 
 	}
-	
+
 	/**
 	 * 
 	 * @param status, filto di ricerca del ticket
@@ -44,7 +70,6 @@ public class TicketService {
 		return repository.findByStatus(status);
 
 	}
-	
 
 	/**
 	 * 
@@ -66,7 +91,7 @@ public class TicketService {
 		return repository.save(ticket);
 
 	}
-	
+
 	/**
 	 * @param ticket, l'oggeto pizza che deve essere creato
 	 * @return il repository aggiornato
@@ -76,8 +101,6 @@ public class TicketService {
 		return repository.save(ticket);
 
 	}
-	
-	
 
 	/**
 	 * @param id, l'id del ticket che deve essere elimianto
@@ -85,9 +108,7 @@ public class TicketService {
 	public void delete(int id) {
 
 		repository.deleteById(id);
-		
+
 	}
-	
-	
 
 }
