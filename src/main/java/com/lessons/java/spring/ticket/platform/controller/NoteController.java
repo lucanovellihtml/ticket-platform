@@ -59,7 +59,7 @@ public class NoteController {
 
 		service.create(formNote);
 
-		// attributes.addFlashAttribute("successMessageCreate", "Discount created...");
+		attributes.addFlashAttribute("successMessageCreate", "Note created...");
 
 		return "redirect:/tickets/show/" + formNote.getTicket().getId();
 
@@ -70,7 +70,7 @@ public class NoteController {
 	 * @return la lista delle note aggiornate;
 	 */
 	@PostMapping("/delete/{id}")
-	public String delete(@PathVariable("id") int id) {
+	public String delete(@PathVariable("id") int id, RedirectAttributes attributes) {
 
 		//Salvo il valore della nota prima che venga eliminata per poi fare la redirect corretta
 		int idTicket = service.getById(id).getTicket().getId();
@@ -78,6 +78,8 @@ public class NoteController {
 		// Elimino i dati dal repository;
 		service.delete(id);
 
+		attributes.addFlashAttribute("successMessageDelete", "Note deleted...");
+		
 		return "redirect:/tickets/show/" + idTicket + "/list-notes-ticket";
 	}
 }

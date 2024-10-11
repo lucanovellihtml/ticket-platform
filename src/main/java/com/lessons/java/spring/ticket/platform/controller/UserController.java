@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lessons.java.spring.ticket.platform.model.Ticket;
 import com.lessons.java.spring.ticket.platform.model.User;
@@ -70,7 +71,7 @@ public class UserController {
 	 *         user aggiornata
 	 */
 	@PostMapping("/user-profile/edit/{id}")
-	public String update(@Valid @ModelAttribute("user") User formUser, BindingResult bindingResult, Model model) {
+	public String update(@Valid @ModelAttribute("user") User formUser, BindingResult bindingResult, Model model, RedirectAttributes attributes) {
 
 		// Passo come parametro nel post submit form l'associazione con i ruoli
 		formUser.setRoles(service.getById(formUser.getId()).getRoles());
@@ -87,8 +88,10 @@ public class UserController {
 		formUser.setPassword("{noop}" + formUser.getPassword());
 
 		service.update(formUser);
+		
+		attributes.addFlashAttribute("successMessageUpdate", "User updated...");
 
-		return "redirect:/tickets/list-tickets";
+		return "redirect:/users/user-profile/edit/" + formUser.getId();
 
 	}
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lessons.java.spring.ticket.platform.model.Note;
 import com.lessons.java.spring.ticket.platform.model.Ticket;
@@ -155,7 +156,7 @@ public class TicketController {
 	 *         aggiornata
 	 */
 	@PostMapping("/edit/{id}")
-	public String update(@Valid @ModelAttribute("ticket") Ticket formTicket, BindingResult bindingResult, Model model) {
+	public String update(@Valid @ModelAttribute("ticket") Ticket formTicket, BindingResult bindingResult, Model model, RedirectAttributes attributes) {
 
 		// Controllo se i campi compilati sono sbagliati
 		// Se ci sono errori ,viene restituita la pagina del form da ricompilare
@@ -179,6 +180,8 @@ public class TicketController {
 		}
 
 		service.update(formTicket);
+		
+		attributes.addFlashAttribute("successMessageUpdate", "Ticket updated...");
 
 		return "redirect:/tickets/list-tickets";
 
@@ -218,11 +221,13 @@ public class TicketController {
 	 * @return la lista dei tickets aggiornata;
 	 */
 	@PostMapping("/delete/{id}")
-	public String delete(@PathVariable("id") int id) {
+	public String delete(@PathVariable("id") int id, RedirectAttributes attributes) {
 
 		// Elimino i dati dal repository;
 		service.delete(id);
 
+		attributes.addFlashAttribute("successMessageDelete", "Ticket deleted...");
+		
 		return "redirect:/tickets/list-tickets";
 
 	}
@@ -264,7 +269,7 @@ public class TicketController {
 	 *         tickets
 	 */
 	@PostMapping("/create")
-	public String store(@Valid @ModelAttribute("ticket") Ticket formTicket, BindingResult bindingResult, Model model) {
+	public String store(@Valid @ModelAttribute("ticket") Ticket formTicket, BindingResult bindingResult, Model model, RedirectAttributes attributes) {
 
 		// Controllo se i campi compilati sono errati
 		if (bindingResult.hasErrors()) {
@@ -276,6 +281,8 @@ public class TicketController {
 		}
 
 		service.create(formTicket);
+		
+		attributes.addFlashAttribute("successMessageCreate", "Ticket created...");
 
 		return "redirect:/tickets/list-tickets";
 
