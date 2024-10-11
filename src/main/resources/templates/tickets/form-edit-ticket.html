@@ -31,51 +31,56 @@
 					<!-- Input id -->
 					<div class="mb-3">
 						<input type="hidden" class="form-control" id="id" th:field="*{id}" th:value="*{id}"
-							aria-label="readonly id ticket" readonly>
-					</div>
-					
-					<!-- Input category -->
-					<div class="mb-3">
-						<input type="hidden" class="form-control" id="id_category" th:field="*{category}" th:value="*{category.getId()}"
-							aria-label="readonly id category" readonly>
+							aria-label="hidden id ticket">
 					</div>
 
 					<!-- Input name -->
 					<div class="mb-3">
-						<label for="name" class="form-label">Name</label>
+						<label for="name" class="form-label fw-bold">Name</label>
 						<input type="text" class="form-control" id="name" aria-label="Disabled input name of ticket"
-							th:field="*{name}">
+							th:field="*{name}" th:errorClass="is-invalid">
+
+						<!-- Check error name -->
+						<div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+							</ul>
+						</div>
 					</div>
 
+					<!-- Input category -->
+					<div class="mb-3">
+						<input type="hidden" class="form-control" id="id_category" th:field="*{category}"
+							th:value="*{category.getId()}" aria-label="hidden id category">
+					</div>
+
+					<!-- Input title category -->
+					<div class="mb-3">
+						<label for="categoryTitle" class="form-label fw-bold">Category</label>
+						<input type="text" class="form-control" id="categoryTitle" th:value="${categoryTitle}"
+							aria-label="disabled category title" disabled>
+					</div>
 
 					<!-- Input status now -->
 					<div class="mb-3">
-						<label for="status" class="form-label">Status now</label>
-						<input type="text" class="form-control"
-							th:value="${status}" aria-label="readonly status ticket" readonly>
+						<label for="status" class="form-label fw-bold">Status now</label>
+						<input type="text" class="form-control" th:value="${status}" aria-label="disabled status ticket"
+							disabled>
 					</div>
 
 					<!-- Input status -->
 					<div class="mb-3">
-						<h6 class="form-label">Choose new status</h6>
-						<div class="form-check d-flex text-start gap-2">
-							<input class="form-check-input" type="radio" name="status" id="status" value="Da fare" th:field="*{status}">
-							<label class="form-check-label" for="status">
-								Da fare
-							</label>
-						</div>
-						<div class="form-check d-flex text-start gap-2">
-							<input class="form-check-input" type="radio" name="status" id="status" value="In corso" th:field="*{status}" checked>
-							<label class="form-check-label" for="status">
-								In corso
-							</label>
-						</div>
-						<div class="form-check d-flex text-start gap-2">
-							<input class="form-check-input" type="radio" name="status" id="status" value="Completato" th:field="*{status}">
-							<label class="form-check-label" for="status">
-								Completato
-							</label>
-						</div>
+						
+						<!-- Title -->
+						<h6 class="form-label fw-bold">Choose new status</h6>
+						
+						<!-- List status -->
+						<select class="form-select" aria-label="Select status" th:field="*{status}">
+						  <option th:value="'Completato'">Completato</option>
+						  <option th:value="'Da fare'">Da fare</option>
+						  <option th:value="'In corso'">In corso</option>
+						</select>
+						
 					</div>
 
 					<!-- Input note -->
@@ -84,19 +89,18 @@
 							<button type="button" class="btn btn-secondary mt-2 mb-2">ADD A NEW NOTE</button>
 						</a>
 					</div>
-					
+
 					<!-- Input user -->
-					<div class="mb-3 d-none">
-						<label for="user" class="form-label">user</label>
-						<input type="number" class="form-control" id="user" th:field="*{user.id}"
-							th:value="*{user.getId()}" aria-label="readonly user" readonly>
+					<div class="mb-3">
+						<input type="hidden" class="form-control" id="user" th:field="*{user}"
+							th:value="*{user.getId()}" aria-label="hidden id user">
 					</div>
 
 					<!-- Input email user -->
 					<div class="mb-3">
-						<label for="userEmail" class="form-label">user</label>
-						<input type="email" class="form-control" id="userEmail" th:value="*{user.getEmail()}"
-							aria-label="readonly user email" disabled>
+						<label for="userEmail" class="form-label fw-bold">User</label>
+						<input type="text" class="form-control" id="userEmail" th:value="${userEmail}"
+							aria-label="disabled user email" disabled>
 					</div>
 
 
