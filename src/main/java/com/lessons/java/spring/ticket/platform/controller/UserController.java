@@ -72,11 +72,7 @@ public class UserController {
 	@PostMapping("/user-profile/edit/{id}")
 	public String update(@Valid @ModelAttribute("user") User formUser, BindingResult bindingResult, Model model) {
 
-		// Sbianco la password altrimenti si crea una somma di stringa se il campo
-		// password non viene modificato
-		service.getById(formUser.getId()).setPassword("");
-
-		// Passo come parametro nel post submit form, l'associazione con i ruoli
+		// Passo come parametro nel post submit form l'associazione con i ruoli
 		formUser.setRoles(service.getById(formUser.getId()).getRoles());
 
 		// Controllo se i campi compilati sono sbagliati
@@ -86,8 +82,8 @@ public class UserController {
 			return "/users/form-edit-user";
 		}
 
-		// Imposto dentro al metodo il metodo che deve aggiungere alla stringa della
-		// password
+		// Imposto il metodo che deve aggiungere alla stringa della
+		// password il tipo di crittografia
 		formUser.setPassword("{noop}" + formUser.getPassword());
 
 		service.update(formUser);

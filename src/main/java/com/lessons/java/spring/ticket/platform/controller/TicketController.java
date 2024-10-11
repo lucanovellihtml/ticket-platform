@@ -131,12 +131,16 @@ public class TicketController {
 			if(authentication.getName().equals(user.getEmail()))
 				model.addAttribute("usernameId", user.getId());
 		}
+
 		
 		model.addAttribute("ticket", service.getById(id));
-
+		
+		model.addAttribute("userEmail", service.getById(id).getUser().getEmail());
+		model.addAttribute("categoryTitle", service.getById(id).getCategory().getTitle());
+		
+		// Sbianco lo status altrimenti si sovrascrivono ad ogni update
 		String status = service.getById(id).getStatus();
 		service.getById(id).setStatus("");
-
 		model.addAttribute("status", status);
 
 		return "/tickets/form-edit-ticket";
@@ -157,6 +161,20 @@ public class TicketController {
 		// Se ci sono errori ,viene restituita la pagina del form da ricompilare
 		// In caso contrario, i dati vengon salvati sul db
 		if (bindingResult.hasErrors()) {
+			
+			// Se ricarica inserisco l'email dello user associato al ticket di modifica
+			model.addAttribute("userEmail", service.getById(formTicket.getId()).getUser().getEmail());
+			
+			// Se ricarica inserisco il nome della category dello user associato al ticket di modifica
+			model.addAttribute("categoryTitle", service.getById(formTicket.getId()).getCategory().getTitle());
+			
+			// Se ricarica la pagina viene perso il dato dell status, in questo modo non vine perso
+			String status = service.getById(formTicket.getId()).getStatus();
+			service.getById(formTicket.getId()).setStatus("");
+			model.addAttribute("status", status);
+
+			System.out.println(bindingResult.getAllErrors());
+			
 			return "/tickets/form-edit-ticket";
 		}
 
