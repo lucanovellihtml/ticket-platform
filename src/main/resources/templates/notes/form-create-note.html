@@ -7,7 +7,7 @@
 
 <body>
 
-	<header th:insert="~{fragments/navbar :: navbar}">
+	<header th:insert="~{fragments/navbar :: navbar(userId=${usernameId})}">
 	</header>
 
 	<main>
@@ -35,7 +35,7 @@
 
 					<!-- Input name user -->
 					<div class="mb-3">
-						<label for="nameuser" class="form-label">Name user</label>
+						<label for="nameuser" class="form-label fw-bold">Name user</label>
 						<input type="text" class="form-control"
 							aria-label="Disabled input name user of note"
 							th:value="*{ticket.getUser().getEmail()}" disabled>
@@ -43,14 +43,14 @@
 
 					<!-- Input ticket name selected -->
 					<div class="mb-3">
-						<label for="nameTicket" class="form-label">Name Ticket</label>
+						<label for="nameTicket" class="form-label fw-bold">Name Ticket</label>
 						<input type="text" class="form-control" aria-label="Disabled input name ticket of note"
 							th:value="*{ticket.name}" disabled>
 					</div>
 
 					<!-- Input creation date now -->
 					<div class="mb-3">
-						<label for="createDate" class="form-label">Creation Date</label>
+						<label for="createDate" class="form-label fw-bold">Creation Date</label>
 						<input type="datetime" class="form-control" th:value="${currentDate}"
 							aria-label="readonly status note" readonly>
 					</div>
@@ -58,7 +58,7 @@
 
 					<!-- input description -->
 					<div class="mb-3">
-						<label for="description" class="form-label">Description</label>
+						<label for="description" class="form-label fw-bold">Description</label>
 						<input type="text" class="form-control" id="description"
 							placeholder="Insert description of note" th:field="*{description}"
 							th:errorClass="is-invalid">
@@ -79,7 +79,7 @@
 
 						<button type="reset" class="btn btn-danger mt-2 mb-2">RESET</button>
 
-						<a href="/tickets" style="text-decoration: none;">
+						<a th:href="@{/tickets/show/{id}(id=*{ticket.id})}" style="text-decoration: none;">
 							<button type="button" class="btn btn-dark mt-2 mb-2">BACK</button>
 						</a>
 
