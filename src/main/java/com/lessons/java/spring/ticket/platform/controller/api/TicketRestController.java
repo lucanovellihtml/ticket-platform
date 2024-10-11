@@ -24,6 +24,10 @@ public class TicketRestController {
 	@Autowired
 	private TicketService service;
 	
+//	@Autowired
+//	private CategoryService serviceCategory;
+	
+	
 
 	/**
 	 * Metodo che restituisce tutti i ticket presenti nel repository
@@ -62,5 +66,25 @@ public class TicketRestController {
 
 	}
 	
+	/**
+	 * Metodo che restituisce tutti i ticket presenti nel repository con il filtro category
+	 * 
+	 * @return la lista dei tickets presenti nel repository con il filtro category
+	 */
+	@GetMapping("category-filter")
+	public List<Ticket> indexCategory(@RequestParam(name = "category", required = true) String category) {
 
+		List<Ticket> listTickets;
+		
+		if(category!= null && !category.isEmpty()) {
+			listTickets = service.findAllByCategory(category);
+		}
+		else {
+			listTickets = service.findAllTickets();
+		}
+		
+		return listTickets;
+
+	}
+	
 }
