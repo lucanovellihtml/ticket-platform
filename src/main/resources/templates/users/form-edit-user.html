@@ -22,6 +22,13 @@
 					<p>This is my profile information</p>
 				</div>
 
+				<!-- Alert update -->
+				<th:block th:if="${successMessageUpdate != null}">
+					<div class="col-12 pt-3 d-flex justify-content-center">
+						<div th:replace="~{fragments/fragments :: successAlertUpdate(${successMessageUpdate})}">
+						</div>
+					</div>
+				</th:block>
 
 				<!-- Form edit user -->
 				<form class="col-12 col-lg-6" id="form-update-user" th:object="${user}"
@@ -34,11 +41,6 @@
 							aria-label="readonly id user" readonly>
 					</div>
 
-					<!-- Input role -->
-					<div class="mb-3">
-						<input type="hidden" class="form-control" id="roles" th:field="*{roles}" th:value="*{roles}"
-							aria-label="readonly role user" readonly>
-					</div>
 
 					<!-- Input tickets -->
 					<div class="mb-3">
@@ -48,22 +50,27 @@
 
 					<!-- Email -->
 					<div class="mb-3">
+						<input type="hidden" class="form-control" id="emailHidden" th:field="*{email}" th:value="*{email}">
+					</div>
+
+
+					<!-- Email -->
+					<div class="mb-3">
 						<label for="email" class="form-label">Email address</label>
-						<input type="email" class="form-control" id="email" th:field="*{email}" th:value="*{email}">
+						<input type="email" class="form-control" id="email" th:value="*{email}" disabled>
 					</div>
 
 					<!-- Password -->
 					<div class="mb-3">
 						<label for="password" class="form-label">Password</label>
 						<input type="password" class="form-control" id="password" th:field="*{password}"
-							placeholder="***************" th:value="*{password}" h:errorClass="is-invalid">
-
-						<!-- Error input -->
-						<div th:if="${#fields.hasErrors('password')}" class="invalid-feedback">
-							<ul>
-								<li th:each="err : ${#fields.errors('password')}" th:text="${err}"></li>
-							</ul>
-						</div>
+							placeholder="***************" disabled>
+					</div>
+					
+					<!-- Password -->
+					<div class="mb-3">
+						<input type="hidden" class="form-control" id="password" th:field="*{password}" th:value="*{password}"
+							placeholder="***************">
 					</div>
 
 					<!-- Status -->
@@ -74,8 +81,7 @@
 					</div>
 
 					<!-- Status -->
-					<div class="form-check form-switch mt-3 mb-3 text-start"
-						th:unless="${checkStatus != true}">
+					<div class="form-check form-switch mt-3 mb-3 text-start" th:unless="${checkStatus != true}">
 						<input class="form-check-input" type="checkbox" role="switch" id="status" th:value="*{status}"
 							th:field="*{status}">
 						<label class="form-check-label text-start" for="status">Not available</label>

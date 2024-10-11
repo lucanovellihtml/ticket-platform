@@ -25,69 +25,63 @@
 				<!-- Form create ticket -->
 				<form class="col-12 col-lg-6" id="form-create-ticket" th:object="${ticket}"
 					th:action="@{/tickets/create}" method="POST">
-					
+
 					<!-- Input name -->
 					<div class="mb-3">
 						<label for="name" class="form-label fw-bold">Name</label>
-						<input type="text" class="form-control" id="name" placeholder="Insert name of ticket" aria-label="name"
-							aria-describedby="name-ticket" th:field="*{name}" th:errorClass="is-invalid">
-					
+						<input type="text" class="form-control" id="name" placeholder="Insert name of ticket"
+							aria-label="name" aria-describedby="name-ticket" th:field="*{name}"
+							th:errorClass="is-invalid">
+
 						<!-- Error input -->
 						<div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
 							<ul>
 								<li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
 							</ul>
 						</div>
-						
+
+					</div>
+
+					<!-- input category -->
+					<div class="mb-3">
+
+						<!-- Title -->
+						<h6 class="form-label fw-bold">Choose category</h6>
+
+						<!-- List status -->
+						<select class="form-select" aria-label="Select category" th:field="*{category}">
+							<option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.title}"></option>
+						</select>
+
+					</div>
+
+					<!-- input status -->
+					<div class="mb-3">
+
+						<!-- Title -->
+						<h6 class="form-label fw-bold">Choose status</h6>
+
+						<!-- List status -->
+						<select class="form-select" aria-label="Select status" th:field="*{status}">
+							<option th:value="'Completato'">Completato</option>
+							<option th:value="'Da fare'">Da fare</option>
+							<option th:value="'In corso'">In corso</option>
+						</select>
+
 					</div>
 					
-					<!-- Input category-->
+					<!-- input user -->
 					<div class="mb-3">
-						<span class="fw-bold">Choose category</span>
-						<div class="form-check d-flex text-start gap-2" th:each="category : ${categories}">
-							<input class="form-check-input" type="radio" name="category" th:value="${category.id}"
-								th:id="'category_' + ${category.id}" th:field="*{category}">
-							<label class="form-check-label" th:for="'category_' + ${category.id}" th:text="${category.title}">
-							</label>
-						</div>
-					</div>
 
-					<!-- Input status -->
-					<div class="mb-3">
-						<span class="fw-bold">Choose status</span>
-						<div class="form-check d-flex text-start gap-2">
-							<input class="form-check-input" type="radio" name="status" id="status" value="Da fare" th:field="*{status}">
-							<label class="form-check-label" for="status">
-								Da fare
-							</label>
-						</div>
-						<div class="form-check d-flex text-start gap-2">
-							<input class="form-check-input" type="radio" name="status" id="status" value="In corso" th:field="*{status}" checked>
-							<label class="form-check-label" for="status">
-								In corso
-							</label>
-						</div>
-						<div class="form-check d-flex text-start gap-2">
-							<input class="form-check-input" type="radio" name="status" id="status" value="Completato" th:field="*{status}">
-							<label class="form-check-label" for="status">
-								Completato
-							</label>
-						</div>
-					</div>
-	
-					<!-- Input user -->
-					<div class="mb-3">
-						<span class="fw-bold">Choose operator active</span>
-						<div class="form-check d-flex text-start gap-2" th:each="user : ${users}">
-							<input class="form-check-input" type="radio" name="user" th:value="${user.id}" th:id="'user_' + ${user.id}"
-								th:field="*{user}">
-							<label class="form-check-label" th:for="'user_' + ${user.id}" th:text="${user.email}">
-							</label>
-						</div>
-					</div>
-					
+						<!-- Title -->
+						<h6 class="form-label fw-bold">Choose operator active</h6>
 
+						<!-- List status -->
+						<select class="form-select" aria-label="Select operator active" th:field="*{user}">
+							<option th:each="user : ${users}" th:value="${user.id}" th:text="${user.email}"></option>
+						</select>
 
+					</div>
 
 					<!-- Button -->
 					<div class="mb-3 d-flex justify-content-center gap-2">

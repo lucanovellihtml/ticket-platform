@@ -22,6 +22,14 @@
 					<h1>Informazione Ticket Selezionato</h1>
 				</div>
 
+				<!-- Alert create -->
+				<th:block th:if="${successMessageCreate != null}">
+					<div class="col-12 pt-3 d-flex justify-content-center">
+						<div th:replace="~{fragments/fragments :: successAlertCreate(${successMessageCreate})}">
+						</div>
+					</div>
+				</th:block>
+
 				<!-- Card-->
 				<div class="col-12 pb-5 d-flex justify-content-center">
 					<div class="card" style="width: 18rem;">
@@ -36,23 +44,24 @@
 						<div class="card-body">
 
 							<!-- Statu -->
-							<h5 class="card-title pt-3">STATUS</h5>
+							<h5 class="card-title pt-3 fw-bold">STATUS</h5>
 							<p class="card-text" th:text="${ticket.status}"></p>
 
 							<!-- user -->
-							<h5 class="card-title pt-3">user</h5>
+							<h5 class="card-title pt-3 fw-bold">USER</h5>
 							<p class="card-text" th:text="${ticket.user.getEmail()}"></p>
 
 							<!-- Category -->
-							<h5 class="card-title pt-3">CATEGORY</h5>
+							<h5 class="card-title pt-3 fw-bold">CATEGORY</h5>
 							<p class="card-text" th:text="${ticket.category.getTitle()}"></p>
 
 							<!-- Note available -->
 							<!-- Title -->
-							<h5 class="card-title pt-3">LIST NOTES</h5>
+							<h5 class="card-title pt-3 fw-bold">LIST NOTES</h5>
 
 							<!-- Button show notes -->
-							<a th:href="@{/tickets/show/{id}/list-notes-ticket(id=${ticket.id})}" style="text-decoration: none;">
+							<a th:href="@{/tickets/show/{id}/list-notes-ticket(id=${ticket.id})}"
+								style="text-decoration: none;">
 								<button type="button" class="btn btn-secondary mt-2 mb-2">SHOW NOTES</button>
 							</a>
 

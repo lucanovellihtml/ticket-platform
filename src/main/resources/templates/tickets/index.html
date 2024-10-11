@@ -36,6 +36,29 @@
 						</form>
 					</div>
 
+					<!-- Alert delete -->
+					<th:block th:if="${successMessageDelete != null}">
+						<div class="col-12 pt-3 d-flex justify-content-center">
+							<div th:replace="~{fragments/fragments :: successAlertDelete(${successMessageDelete})}">
+							</div>
+						</div>
+					</th:block>
+
+					<!-- Alert update -->
+					<th:block th:if="${successMessageUpdate != null}">
+						<div class="col-12 pt-3 d-flex justify-content-center">
+							<div th:replace="~{fragments/fragments :: successAlertUpdate(${successMessageUpdate})}">
+							</div>
+						</div>
+					</th:block>
+
+					<!-- Alert create -->
+					<th:block th:if="${successMessageCreate != null}">
+						<div class="col-12 pt-3 d-flex justify-content-center">
+							<div th:replace="~{fragments/fragments :: successAlertCreate(${successMessageCreate})}">
+							</div>
+						</div>
+					</th:block>
 
 					<!-- Table -->
 					<div class="col-12">
@@ -52,7 +75,8 @@
 									<th class="d-none d-md-table-cell" scope="col">Category</th>
 									<th class="d-none d-md-table-cell" scope="col">Show</th>
 									<th class="d-none d-md-table-cell" scope="col">Update</th>
-									<th class="d-none d-md-table-cell" scope="col" sec:authorize="hasAuthority('ADMIN')">Delete</th>
+									<th class="d-none d-md-table-cell" scope="col"
+										sec:authorize="hasAuthority('ADMIN')">Delete</th>
 									<th class="d-md-none" scope="col">Action</th>
 								</tr>
 							</thead>
@@ -154,13 +178,15 @@
 
 										<!-- Button trigger modal -->
 										<button type="button" class="btn btn-danger" style="max-width: 80px;"
-											data-bs-toggle="modal" th:data-bs-target="'#modal-delete-' + ${ticket.id}" sec:authorize="hasAuthority('ADMIN')">
+											data-bs-toggle="modal" th:data-bs-target="'#modal-delete-' + ${ticket.id}"
+											sec:authorize="hasAuthority('ADMIN')">
 											DELETE
 										</button>
 
 										<!-- Modal -->
 										<div class="modal fade" th:id="'modal-delete-' + ${ticket.id}" tabindex="-1"
-											aria-labelledby="modal-delete" aria-hidden="true" sec:authorize="hasAuthority('ADMIN')">
+											aria-labelledby="modal-delete" aria-hidden="true"
+											sec:authorize="hasAuthority('ADMIN')">
 											<div class="modal-dialog">
 												<div class="modal-content">
 
@@ -196,42 +222,45 @@
 								</tr>
 							</tbody>
 
-							
+
 							<!-- Row Operator -->
 							<tbody sec:authorize="hasAuthority('OPERATOR')">
-							
+
 								<tr th:each="ticket : ${tickets}">
 									<th:block th:if="${ticket.user.getEmail()} == ${username}">
 										<!-- Id note -->
 										<td class="d-none d-sm-table-cell" th:text="${ticket.id}"></td>
-							
+
 										<!-- Name -->
 										<td th:text="${ticket.name}"></td>
-							
+
 										<!-- Status -->
 										<td th:text="${ticket.status}"></td>
-							
+
 										<!-- user-->
 										<td class="d-none d-md-table-cell" th:text="${ticket.user.getEmail()}"></td>
-							
+
 										<!-- Note-->
 										<td class="d-none d-md-table-cell" th:if="${ticket.notes.size > 0}">YES</td>
-							
-										<td class="d-none d-md-table-cell" th:unless="${ticket.notes.size > 0}">EMPTY</td>
-							
+
+										<td class="d-none d-md-table-cell" th:unless="${ticket.notes.size > 0}">EMPTY
+										</td>
+
 										<!-- Category -->
 										<td class="d-none d-md-table-cell" th:text="${ticket.category.getTitle()}"></td>
-							
+
 										<!-- Button show -->
 										<td class="d-none d-md-table-cell">
-											<a th:href="@{/tickets/show/{id}(id=${ticket.id})}" class="btn btn-success">SHOW</a>
+											<a th:href="@{/tickets/show/{id}(id=${ticket.id})}"
+												class="btn btn-success">SHOW</a>
 										</td>
-							
+
 										<!-- Button update -->
 										<td class="d-none d-md-table-cell">
-											<a th:href="@{/tickets/edit/{id}(id=${ticket.id})}" class="btn btn-warning">UPDATE</a>
+											<a th:href="@{/tickets/edit/{id}(id=${ticket.id})}"
+												class="btn btn-warning">UPDATE</a>
 										</td>
-							
+
 										<!-- Button modal -->
 										<td class="d-none d-md-table-cell" sec:authorize="hasAuthority('ADMIN')">
 											<!-- Button trigger modal -->
@@ -239,94 +268,109 @@
 												th:data-bs-target="'#modal-delete-' + ${ticket.id}">
 												DELETE
 											</button>
-							
+
 											<!-- Modal -->
 											<div class="modal fade" th:id="'modal-delete-' + ${ticket.id}" tabindex="-1"
 												aria-labelledby="modal-delete" aria-hidden="true">
 												<div class="modal-dialog modal-fullscreen-sm-down">
 													<div class="modal-content">
-							
+
 														<div class="modal-header">
-															<h1 class="modal-title fs-5" id="exampleModalLabel">ARE YOU SURE
+															<h1 class="modal-title fs-5" id="exampleModalLabel">ARE YOU
+																SURE
 																OF DELETE THIS TICKET?</h1>
-															<button type="button" class="btn-close" data-bs-dismiss="modal"
-																aria-label="Close"></button>
+															<button type="button" class="btn-close"
+																data-bs-dismiss="modal" aria-label="Close"></button>
 														</div>
-							
+
 														<div class="modal-body">
 															Deleting ticket...
 														</div>
-							
+
 														<div class="modal-footer">
-															<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
-							
+															<button type="button" class="btn btn-secondary"
+																data-bs-dismiss="modal">NO</button>
+
 															<!-- Form delete button -->
-															<form class="d-inline-block" th:action="@{/tickets/delete/{id}(id=${ticket.id})}"
+															<form class="d-inline-block"
+																th:action="@{/tickets/delete/{id}(id=${ticket.id})}"
 																method="POST">
-																<button type="submit" class="btn btn-danger">YES</button>
+																<button type="submit"
+																	class="btn btn-danger">YES</button>
 															</form>
-							
+
 														</div>
 													</div>
 												</div>
 											</div>
 										</td>
-							
+
 										<!-- Button action size phone -->
 										<td class="d-md-none d-flex flex-column gap-2 align-items-center">
-							
+
 											<!-- Button show -->
-											<a th:href="@{/tickets/show/{id}(id=${ticket.id})}" style="text-decoration: none;">
-												<button type="button" class="btn btn-success" style="max-width: 80px;">SHOW</button>
+											<a th:href="@{/tickets/show/{id}(id=${ticket.id})}"
+												style="text-decoration: none;">
+												<button type="button" class="btn btn-success"
+													style="max-width: 80px;">SHOW</button>
 											</a>
-							
+
 											<!-- Button update -->
-											<a th:href="@{/tickets/edit/{id}(id=${ticket.id})}" style="text-decoration: none;">
-												<button type="button" class="btn btn-warning" style="max-width: 80px;">UPDATE</button>
+											<a th:href="@{/tickets/edit/{id}(id=${ticket.id})}"
+												style="text-decoration: none;">
+												<button type="button" class="btn btn-warning"
+													style="max-width: 80px;">UPDATE</button>
 											</a>
-							
+
 											<!-- Button trigger modal -->
-											<button type="button" class="btn btn-danger" style="max-width: 80px;" data-bs-toggle="modal"
-												th:data-bs-target="'#modal-delete-' + ${ticket.id}" sec:authorize="hasAuthority('ADMIN')">
+											<button type="button" class="btn btn-danger" style="max-width: 80px;"
+												data-bs-toggle="modal"
+												th:data-bs-target="'#modal-delete-' + ${ticket.id}"
+												sec:authorize="hasAuthority('ADMIN')">
 												DELETE
 											</button>
-							
+
 											<!-- Modal -->
 											<div class="modal fade" th:id="'modal-delete-' + ${ticket.id}" tabindex="-1"
-												aria-labelledby="modal-delete" aria-hidden="true" sec:authorize="hasAuthority('ADMIN')">
+												aria-labelledby="modal-delete" aria-hidden="true"
+												sec:authorize="hasAuthority('ADMIN')">
 												<div class="modal-dialog">
 													<div class="modal-content">
-							
+
 														<div class="modal-header">
-															<h1 class="modal-title fs-5" id="exampleModalLabel">ARE YOU SURE
+															<h1 class="modal-title fs-5" id="exampleModalLabel">ARE YOU
+																SURE
 																OF DELETE THIS TICKET?</h1>
-															<button type="button" class="btn-close" data-bs-dismiss="modal"
-																aria-label="Close"></button>
+															<button type="button" class="btn-close"
+																data-bs-dismiss="modal" aria-label="Close"></button>
 														</div>
-							
+
 														<div class="modal-body">
 															Deleting ticket...
 														</div>
-							
+
 														<div class="modal-footer">
-															<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
-							
+															<button type="button" class="btn btn-secondary"
+																data-bs-dismiss="modal">NO</button>
+
 															<!-- Form delete button -->
-															<form class="d-inline-block" th:action="@{/tickets/delete/{id}(id=${ticket.id})}"
+															<form class="d-inline-block"
+																th:action="@{/tickets/delete/{id}(id=${ticket.id})}"
 																method="POST">
-																<button type="submit" class="btn btn-danger">YES</button>
+																<button type="submit"
+																	class="btn btn-danger">YES</button>
 															</form>
-							
+
 														</div>
 													</div>
 												</div>
 											</div>
-							
+
 										</td>
 									</th:block>
-							
+
 								</tr>
-							
+
 							</tbody>
 						</table>
 					</div>

@@ -21,19 +21,19 @@
 	<header th:fragment="header">
 	</header>
 
-	<!-- FRAGMENTS SUCCESS ALERT -->
+	<!-- Success alert delete -->
 	<div th:fragment="successAlertDelete(message)" class="alert alert-danger alert-dismissible fade show" role="alert">
 		<p th:text="${message}"></p>
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 	</div>
 
-	<!-- FRAGMENTS SUCCESS CREATE -->
+	<!-- Success alert create -->
 	<div th:fragment="successAlertCreate(message)" class="alert alert-success alert-dismissible fade show" role="alert">
 		<p th:text="${message}"></p>
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 	</div>
 
-	<!-- FRAGMENTS SUCCESS UPDATE -->
+	<!-- Success alert update -->
 	<div th:fragment="successAlertUpdate(message)" class="alert alert-success alert-dismissible fade show" role="alert">
 		<p th:text="${message}"></p>
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -47,7 +47,7 @@
 
 <th:block th:fragment="scripts">
 
-	<!-- JS BOOTSTRAP -->
+	<!-- Bootstrap JS -->
 	<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
 
 </th:block>

@@ -21,6 +21,14 @@
 					<h1>Lista delle note del ticket</h1>
 				</div>
 
+				<!-- Alert delete -->
+				<th:block th:if="${successMessageDelete != null}">
+					<div class="col-12 pt-3 d-flex justify-content-center">
+						<div th:replace="~{fragments/fragments :: successAlertDelete(${successMessageDelete})}">
+						</div>
+					</div>
+				</th:block>
+				
 				<!-- Button -->
 				<div class="col-12 pt-3 text-lg-end text-md-center">
 
