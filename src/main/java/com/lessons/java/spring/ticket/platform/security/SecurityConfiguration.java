@@ -21,8 +21,10 @@ public class SecurityConfiguration {
 	 */
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests().requestMatchers("/tickets/**", "/notes/**").hasAuthority("ADMIN")
-				.requestMatchers("/notes/**").hasAuthority("OPERATOR")
+		http.authorizeHttpRequests()
+				.requestMatchers("/tickets/list-tickets").hasAnyAuthority("ADMIN", "OPERATOR")
+				.requestMatchers("/tickets/show", "/tickets/edit").hasAnyAuthority("ADMIN", "OPERATOR")
+				.requestMatchers("/tickets/delete", "/tickets/create").hasAuthority("ADMIN")
 				.requestMatchers("/**").permitAll()
 				.and().formLogin()
 				.and().logout()
