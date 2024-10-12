@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
@@ -19,14 +21,18 @@ import jakarta.validation.constraints.NotNull;
 public class User {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@NotNull
+	@NotNull(message="The email of user cannot be null!")
 	private String email;
 	
-	@NotNull
+	@NotNull(message="The password of user cannot be null!")
 	private String password;
 	
+	/**
+	 * Lo status ho deciso di impostare nessuna condizione di validazione del valore perchè distinguere admin da operator
+	 */
 	private Boolean status;
 
 	/**

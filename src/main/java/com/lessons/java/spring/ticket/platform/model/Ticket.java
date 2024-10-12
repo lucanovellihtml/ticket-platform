@@ -25,11 +25,11 @@ public class Ticket {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@NotNull
-	@Size(min = 2, max = 255)
+	@NotNull(message="The name of ticket cannot be null!")
+	@Size(min = 2, max = 255, message="Name must have at least 2 charachters and a maximum of 255")
 	private String name;
 	
-	@NotNull
+	@NotNull(message="The status of ticket cannot be null!")
 	private String status;
 
 	/**

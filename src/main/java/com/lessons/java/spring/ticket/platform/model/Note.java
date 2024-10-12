@@ -23,8 +23,8 @@ public class Note {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@NotNull
-	@Size(min = 2, max = 255)
+	@NotNull(message="The description of category cannot be null!")
+	@Size(min = 2, max = 255, message="Description must have at least 2 charachters and a maximum of 255")
 	private String description;
 
 	private LocalDateTime createAt;

@@ -23,8 +23,8 @@ public class Category {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@NotNull
-	@Size(min = 2, max = 255)
+	@NotNull(message="The title of category cannot be null!")
+	@Size(min = 2, max = 255, message="Title must have at least 2 charachters and a maximum of 255")
 	private String title;
 	
 	private String description;
