@@ -1,5 +1,7 @@
 package com.lessons.java.spring.ticket.platform.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lessons.java.spring.ticket.platform.model.Ticket;
 import com.lessons.java.spring.ticket.platform.model.User;
+import com.lessons.java.spring.ticket.platform.service.RoleService;
 import com.lessons.java.spring.ticket.platform.service.UserService;
 
 import jakarta.validation.Valid;
@@ -24,6 +27,32 @@ public class UserController {
 
 	@Autowired
 	private UserService service;
+
+	@Autowired
+	private RoleService serviceRole;
+
+	/**
+	 * 
+	 * @return la lista di tutti i tickets senza filtro;
+	 * @return la lista dei tickets filtrati;
+	 */
+	@GetMapping("/list-users")
+	public String index(Authentication authentication, Model model) {
+
+		List<User> listUsers;
+
+		// Inserisco le informazioni dello user autenticato
+		model.addAttribute("username", authentication.getName());
+		
+		// Creo la lista degli user solo operators e non admin, l'admin ha lo status a null
+		listUsers = service.findAllUsersOperators(true, false);
+
+		// Inserisco i dati nella lista del model per utilizzarli nella pagina html;
+		model.addAttribute("users", listUsers);
+
+		return "/users/index";
+
+	}
 
 	/**
 	 * Viene mostrato il form con i dati dello user che si vuole modificare
@@ -71,7 +100,8 @@ public class UserController {
 	 *         user aggiornata
 	 */
 	@PostMapping("/user-profile/edit/{id}")
-	public String update(@Valid @ModelAttribute("user") User formUser, BindingResult bindingResult, Model model, RedirectAttributes attributes) {
+	public String update(@Valid @ModelAttribute("user") User formUser, BindingResult bindingResult, Model model,
+			RedirectAttributes attributes) {
 
 		// Passo come parametro nel post submit form l'associazione con i ruoli
 		formUser.setRoles(service.getById(formUser.getId()).getRoles());
@@ -88,10 +118,82 @@ public class UserController {
 		formUser.setPassword("{noop}" + formUser.getPassword());
 
 		service.update(formUser);
-		
+
 		attributes.addFlashAttribute("successMessageUpdate", "User updated...");
 
 		return "redirect:/users/user-profile/edit/" + formUser.getId();
+
+	}
+
+	/**
+	 * Creazione dello user
+	 * 
+	 * @return form per la creazione dello user;
+	 */
+	@GetMapping("/create")
+	public String create(Model model, Authentication authentication) {
+
+		// Logica per passare il parametro ,dello user autenticato , nel nav per
+		// impostare il bottone setting
+		for (User user : service.findAllUsers()) {
+			if (authentication.getName().equals(user.getEmail()))
+				model.addAttribute("usernameId", user.getId());
+		}
+
+		model.addAttribute("user", new User());
+
+		return "/users/form-create-user";
+
+	}
+
+	/**
+	 * Memorizza i dati del ticket passati dal form della create
+	 * 
+	 * @return se i dati della form sono sbagliati, restituisce il form della create
+	 *         da ricompilare
+	 * @return una volta salvato il ticket nuovo, viene restituita la lista dei
+	 *         tickets
+	 */
+	@PostMapping("/create")
+	public String store(@Valid @ModelAttribute("user") User formUser, BindingResult bindingResult, Model model,
+			RedirectAttributes attributes) {
+
+		// Controllo se i campi compilati sono errati
+		if (bindingResult.hasErrors()) {
+			// Inserisco i dati nel model anche nella store perchè se si riaggiona la
+			// pagina, i campi vengono sbiancati
+			return "/users/form-create-user";
+		}
+
+		// Imposto il metodo che deve aggiungere alla stringa della
+		// password il tipo di crittografia
+		formUser.setPassword("{noop}" + formUser.getPassword());
+
+		// Aggiungo di default la role OPERATOR allo user appena creato
+		formUser.setRoles(serviceRole.findByName("OPERATOR"));
+
+		service.create(formUser);
+
+		attributes.addFlashAttribute("successMessageCreate", "User created...");
+
+		return "redirect:/users/list-users";
+
+	}
+
+	/**
+	 * Elimina lo user selezionato;
+	 * 
+	 * @return la lista degli users aggiornati;
+	 */
+	@PostMapping("/delete/{id}")
+	public String delete(@PathVariable("id") int id, RedirectAttributes attributes) {
+
+		// Elimino i dati dal repository;
+		service.delete(id);
+
+		attributes.addFlashAttribute("successMessageDelete", "Operator deleted...");
+
+		return "redirect:/users/list-users";
 
 	}
 
