@@ -1,0 +1,201 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.thymeleaf.org">
+
+<head th:insert="~{fragments/fragments :: head}">
+</head>
+
+
+<body>
+
+	<header th:insert="~{fragments/navbar :: navbar(userId=${usernameId})}">
+	</header>
+
+	<main>
+
+		<!-- Section table index -->
+		<section class="container-sm text-center">
+			<div class="row gap-5">
+
+				<!-- Title -->
+				<div class="col-12 pt-3">
+					<h1>Lista Operators</h1>
+				</div>
+
+
+				<!-- Condizione db popolato -->
+				<th:block th:if="${users.size > 0}">
+
+					<!-- Alert delete -->
+					<th:block th:if="${successMessageDelete != null}">
+						<div class="col-12 pt-3 d-flex justify-content-center">
+							<div th:replace="~{fragments/fragments :: successAlertDelete(${successMessageDelete})}">
+							</div>
+						</div>
+					</th:block>
+
+					<!-- Alert create -->
+					<th:block th:if="${successMessageCreate != null}">
+						<div class="col-12 pt-3 d-flex justify-content-center">
+							<div th:replace="~{fragments/fragments :: successAlertCreate(${successMessageCreate})}">
+							</div>
+						</div>
+					</th:block>
+
+					<!-- Table -->
+					<div class="col-12">
+						<table class="table">
+
+							<!-- Columns -->
+							<thead>
+								<tr>
+									<th class="d-none d-sm-table-cell" scope="col">#</th>
+									<th scope="col">Email</th>
+									<th scope="col">Status</th>
+									<th class="d-none d-md-table-cell" scope="col">Delete</th>
+									<th class="d-md-none" scope="col">Action</th>
+								</tr>
+							</thead>
+
+							<!-- Row -->
+							<tbody>
+								<tr th:each="user : ${users}">
+
+									<!-- Id note -->
+									<td class="d-none d-sm-table-cell" th:text="${user.id}"></td>
+
+									<!-- Email -->
+									<td th:text="${user.email}"></td>
+
+									<!-- Status -->
+									<td th:if="${user.status} == true ">NOT ACTIVE</td>
+
+									<!-- Status -->
+									<td th:unless="${user.status} == true ">ACTIVE</td>
+
+									<!-- Button modal -->
+									<td class="d-none d-md-table-cell">
+										<!-- Button trigger modal -->
+										<button type="button" class="btn btn-danger" data-bs-toggle="modal"
+											th:data-bs-target="'#modal-delete-' + ${user.id}">
+											DELETE
+										</button>
+
+										<!-- Modal -->
+										<div class="modal fade" th:id="'modal-delete-' + ${user.id}" tabindex="-1"
+											aria-labelledby="modal-delete" aria-hidden="true">
+											<div class="modal-dialog modal-fullscreen-sm-down">
+												<div class="modal-content">
+
+													<div class="modal-header">
+														<h1 class="modal-title fs-5" id="exampleModalLabel">ARE YOU SURE
+															OF DELETE THIS OPERATOR?</h1>
+														<button type="button" class="btn-close" data-bs-dismiss="modal"
+															aria-label="Close"></button>
+													</div>
+
+													<div class="modal-body">
+														Deleting operator...
+													</div>
+
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary"
+															data-bs-dismiss="modal">NO</button>
+
+														<!-- Form delete button -->
+														<form class="d-inline-block"
+															th:action="@{/users/delete/{id}(id=${user.id})}"
+															method="POST">
+															<button type="submit" class="btn btn-danger">YES</button>
+														</form>
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</td>
+
+									<!-- Button action size phone -->
+									<td class="d-md-none d-flex flex-column gap-2 align-items-center">
+
+										<!-- Button trigger modal -->
+										<button type="button" class="btn btn-danger" style="max-width: 80px;"
+											data-bs-toggle="modal" th:data-bs-target="'#modal-delete-' + ${user.id}">
+											DELETE
+										</button>
+
+										<!-- Modal -->
+										<div class="modal fade" th:id="'modal-delete-' + ${user.id}" tabindex="-1"
+											aria-labelledby="modal-delete" aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content">
+
+													<div class="modal-header">
+														<h1 class="modal-title fs-5" id="exampleModalLabel">ARE YOU SURE
+															OF DELETE THIS OPERATOR?</h1>
+														<button type="button" class="btn-close" data-bs-dismiss="modal"
+															aria-label="Close"></button>
+													</div>
+
+													<div class="modal-body">
+														Deleting operator...
+													</div>
+
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary"
+															data-bs-dismiss="modal">NO</button>
+
+														<!-- Form delete button -->
+														<form class="d-inline-block"
+															th:action="@{/users/delete/{id}(id=${user.id})}"
+															method="POST">
+															<button type="submit" class="btn btn-danger">YES</button>
+														</form>
+
+													</div>
+												</div>
+											</div>
+										</div>
+
+									</td>
+
+								</tr>
+							</tbody>
+
+						</table>
+					</div>
+
+				</th:block>
+
+
+				<!--  Condizione db non popolato -->
+				<th:block th:unless="${users.size > 0}">
+
+					<!-- Error -->
+					<div class="col-12 justify-content-center position-absolute top-50 start-50 translate-middle">
+
+						<!-- Title -->
+						<h3 class="fw-bold pb-3">Operators non presenti</h3>
+
+						<!-- Spinner -->
+						<div class="spinner-border" role="status">
+							<span class="visually-hidden">Loading...</span>
+						</div>
+
+					</div>
+
+				</th:block>
+
+			</div>
+		</section>
+
+
+	</main>
+
+</body>
+
+
+<th:block th:replace="~{fragments/fragments :: scripts}">
+</th:block>
+
+
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.thymeleaf.org">
+
+<head th:insert="~{fragments/fragments :: head}">
+</head>
+
+
+<body>
+
+	<header th:insert="~{fragments/navbar :: navbar(userId=${usernameId})}">
+	</header>
+	<main>
+
+		<!-- Section form create -->
+		<section class="container text-center">
+			<div class="row gap-4 justify-content-center">
+
+				<!-- Title -->
+				<div class="col-12 pt-3 d-flex flex-column gap-3">
+					<h1>Create operator</h1>
+					<p>Complete the form to create an operator!!!</p>
+				</div>
+
+
+				<!-- Form create user -->
+				<form class="col-12 col-lg-6" id="form-create-user" th:object="${user}"
+					th:action="@{/users/create}" method="POST">
+
+					<!-- Input email -->
+					<div class="mb-3">
+						<label for="email" class="form-label fw-bold">Email</label>
+						<input type="text" class="form-control" id="email" placeholder="Insert email of user"
+							aria-label="email" aria-describedby="email-user" th:field="*{email}"
+							th:errorClass="is-invalid">
+
+						<!-- Error input -->
+						<div th:if="${#fields.hasErrors('email')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('email')}" th:text="${err}"></li>
+							</ul>
+						</div>
+
+					</div>
+
+					<!-- Input password -->
+					<div class="mb-3">
+						<label for="password" class="form-label fw-bold">Password</label>
+						<input type="password" class="form-control" id="password" placeholder="Insert password of user"
+							aria-label="password" aria-describedby="password-user" th:field="*{password}"
+							th:errorClass="is-invalid">
+
+						<!-- Error input -->
+						<div th:if="${#fields.hasErrors('password')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('password')}" th:text="${err}"></li>
+							</ul>
+						</div>
+
+					</div>
+
+					
+					<!-- Input type of user -->
+					<!-- Status -->
+					<div class="form-check form-switch mt-3 mb-3 text-start">
+						<input class="form-check-input" type="checkbox" role="switch" id="status" th:value="*{status}"
+							th:field="*{status}">
+						<label class="form-check-label text-start" for="status">Not available</label>
+					</div>
+
+					<!-- Button -->
+					<div class="mb-3 d-flex justify-content-center gap-2">
+
+						<button type="submit" class="btn btn-warning mt-2 mb-2">CREATE</button>
+
+						<button type="reset" class="btn btn-danger mt-2 mb-2">RESET</button>
+
+						<a href="/tickets/list-tickets" style="text-decoration: none;">
+							<button type="button" class="btn btn-dark mt-2 mb-2">BACK</button>
+						</a>
+
+					</div>
+
+				</form>
+
+			</div>
+
+
+		</section>
+
+
+	</main>
+
+</body>
+
+
+<th:block th:replace="~{fragments/fragments :: scripts}">
+</th:block>
+
+
+</html>
