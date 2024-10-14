@@ -51,6 +51,7 @@
 									<th class="d-none d-sm-table-cell" scope="col">#</th>
 									<th scope="col">Email</th>
 									<th scope="col">Status</th>
+									<th class="d-none d-md-table-cell" scope="col">Update</th>
 									<th class="d-none d-md-table-cell" scope="col">Delete</th>
 									<th class="d-md-none" scope="col">Action</th>
 								</tr>
@@ -72,6 +73,12 @@
 									<!-- Status -->
 									<td th:unless="${user.status} == true ">ACTIVE</td>
 
+									<!-- Button update -->
+									<td class="d-none d-md-table-cell">
+										<a th:href="@{/users/user-profile/edit/{id}(id=${user.id})}"
+											class="btn btn-warning">UPDATE</a>
+									</td>
+									
 									<!-- Button modal -->
 									<td class="d-none d-md-table-cell">
 										<!-- Button trigger modal -->
@@ -117,6 +124,13 @@
 									<!-- Button action size phone -->
 									<td class="d-md-none d-flex flex-column gap-2 align-items-center">
 
+										<!-- Button update -->
+										<a th:href="@{/users/user-profile/edit/{id}(id=${user.id})}"
+											class="text-decoration-none">
+											<button type="button" class="btn btn-warning"
+												style="max-width: 80px;">UPDATE</button>
+										</a>
+										
 										<!-- Button trigger modal -->
 										<button type="button" class="btn btn-danger" style="max-width: 80px;"
 											data-bs-toggle="modal" th:data-bs-target="'#modal-delete-' + ${user.id}">
