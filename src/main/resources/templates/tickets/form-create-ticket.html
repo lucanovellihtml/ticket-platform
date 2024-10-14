@@ -22,81 +22,109 @@
 				</div>
 
 
-				<!-- Form create ticket -->
-				<form class="col-12 col-lg-6" id="form-create-ticket" th:object="${ticket}"
-					th:action="@{/tickets/create}" method="POST">
+				<!-- Condizione db popolato user operator -->
+				<th:block th:if="${users.size > 0}">
 
-					<!-- Input name -->
-					<div class="mb-3">
-						<label for="name" class="form-label fw-bold">Name</label>
-						<input type="text" class="form-control" id="name" placeholder="Insert name of ticket"
-							aria-label="name" aria-describedby="name-ticket" th:field="*{name}"
-							th:errorClass="is-invalid">
+					<!-- Form create ticket -->
+					<form class="col-12 col-lg-6" id="form-create-ticket" th:object="${ticket}"
+						th:action="@{/tickets/create}" method="POST">
 
-						<!-- Error input -->
-						<div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
-							<ul>
-								<li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
-							</ul>
+						<!-- Input name -->
+						<div class="mb-3">
+							<label for="name" class="form-label fw-bold">Name</label>
+							<input type="text" class="form-control" id="name" placeholder="Insert name of ticket"
+								aria-label="name" aria-describedby="name-ticket" th:field="*{name}"
+								th:errorClass="is-invalid">
+
+							<!-- Error input -->
+							<div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+								<ul>
+									<li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+								</ul>
+							</div>
+
+						</div>
+
+						<!-- input category -->
+						<div class="mb-3">
+
+							<!-- Title -->
+							<h6 class="form-label fw-bold">Choose category</h6>
+
+							<!-- List status -->
+							<select class="form-select" aria-label="Select category" th:field="*{category}">
+								<option th:each="category : ${categories}" th:value="${category.id}"
+									th:text="${category.title}"></option>
+							</select>
+
+						</div>
+
+						<!-- input status -->
+						<div class="mb-3">
+
+							<!-- Title -->
+							<h6 class="form-label fw-bold">Choose status</h6>
+
+							<!-- List status -->
+							<select class="form-select" aria-label="Select status" th:field="*{status}">
+								<option th:value="'Completato'">Completato</option>
+								<option th:value="'Da fare'">Da fare</option>
+								<option th:value="'In corso'">In corso</option>
+							</select>
+
+						</div>
+
+						<!-- input user -->
+						<div class="mb-3">
+
+							<!-- Title -->
+							<h6 class="form-label fw-bold">Choose operator active</h6>
+
+							<!-- List status -->
+							<select class="form-select" aria-label="Select operator active" th:field="*{user}">
+								<option th:each="user : ${users}" th:value="${user.id}" th:text="${user.email}">
+								</option>
+							</select>
+
+						</div>
+
+						<!-- Button -->
+						<div class="mb-3 d-flex justify-content-center gap-2">
+
+							<button type="submit" class="btn btn-warning mt-2 mb-2">CREATE</button>
+
+							<button type="reset" class="btn btn-danger mt-2 mb-2">RESET</button>
+
+							<a href="/tickets/list-tickets" style="text-decoration: none;">
+								<button type="button" class="btn btn-dark mt-2 mb-2">BACK</button>
+							</a>
+
+						</div>
+
+					</form>
+
+				</th:block>
+
+				<!-- Condizione db non popolato user operator -->
+				<th:block th:unless="${users.size > 0}">
+
+					<!-- Error -->
+					<div class="col-12 justify-content-center position-absolute top-50 start-50 translate-middle">
+
+						<!-- Title -->
+						<h3 class="fw-bold pb-3">Operators non presenti</h3>
+						
+						<!-- Paragraph -->
+						<p>Crea un operatore prima di creare un ticket!!!</p>
+
+						<!-- Spinner -->
+						<div class="spinner-border" role="status">
+							<span class="visually-hidden">Loading...</span>
 						</div>
 
 					</div>
 
-					<!-- input category -->
-					<div class="mb-3">
-
-						<!-- Title -->
-						<h6 class="form-label fw-bold">Choose category</h6>
-
-						<!-- List status -->
-						<select class="form-select" aria-label="Select category" th:field="*{category}">
-							<option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.title}"></option>
-						</select>
-
-					</div>
-
-					<!-- input status -->
-					<div class="mb-3">
-
-						<!-- Title -->
-						<h6 class="form-label fw-bold">Choose status</h6>
-
-						<!-- List status -->
-						<select class="form-select" aria-label="Select status" th:field="*{status}">
-							<option th:value="'Completato'">Completato</option>
-							<option th:value="'Da fare'">Da fare</option>
-							<option th:value="'In corso'">In corso</option>
-						</select>
-
-					</div>
-					
-					<!-- input user -->
-					<div class="mb-3">
-
-						<!-- Title -->
-						<h6 class="form-label fw-bold">Choose operator active</h6>
-
-						<!-- List status -->
-						<select class="form-select" aria-label="Select operator active" th:field="*{user}">
-							<option th:each="user : ${users}" th:value="${user.id}" th:text="${user.email}"></option>
-						</select>
-
-					</div>
-
-					<!-- Button -->
-					<div class="mb-3 d-flex justify-content-center gap-2">
-
-						<button type="submit" class="btn btn-warning mt-2 mb-2">CREATE</button>
-
-						<button type="reset" class="btn btn-danger mt-2 mb-2">RESET</button>
-
-						<a href="/tickets/list-tickets" style="text-decoration: none;">
-							<button type="button" class="btn btn-dark mt-2 mb-2">BACK</button>
-						</a>
-
-					</div>
-
-				</form>
+				</th:block>
 
 			</div>
 

@@ -30,7 +30,19 @@
 						<!-- Create tickets -->
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" th:href="@{/tickets/create}"
-								sec:authorize="hasAuthority('ADMIN')">Create Tickets</a>
+								sec:authorize="hasAuthority('ADMIN')">Create Ticket</a>
+						</li>
+
+						<!-- Create user -->
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/users/create}"
+								sec:authorize="hasAuthority('ADMIN')">Create User</a>
+						</li>
+
+						<!-- List user -->
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/users/list-users}"
+								sec:authorize="hasAuthority('ADMIN')">List Users</a>
 						</li>
 
 						<!-- Check of logged user -->
@@ -38,13 +50,14 @@
 							ADMIN : <span sec:authentication="name"></span>
 						</li>
 
+
 						<!-- Check of logged user -->
 						<li class="nav-item d-sm-block d-md-none fw-bold pt-2" sec:authorize="hasAuthority('OPERATOR')">
 							OPERATOR : <span sec:authentication="name"></span>
 						</li>
 
 						<!-- Profile settings -->
-						<a th:href="@{/users/user-profile/edit/{id}(id=userId)}" style="text-decoration: none;">
+						<a th:href="@{/users/user-profile/edit/{id}(id=userId)}" class="text-decoration-none">
 							<li class="nav-item d-sm-block d-md-none fw-bold pt-2"
 								sec:authorize="hasAuthority('OPERATOR')">
 								Profile Settings
@@ -52,13 +65,24 @@
 						</a>
 
 						<!-- Exit -->
-						<li class="nav-item d-sm-block d-md-none fw-bold pt-2" sec:authorize="hasAuthority('OPERATOR')">
-							Exit
+						<li class="nav-item d-sm-block d-md-none fw-bold pt-2">
+							<a th:href="@{/logout}" class="text-decoration-none fw-bold text-dark">
+								Exit
+							</a>
 						</li>
 
 					</ul>
 				</div>
 
+
+				<!-- Check of logged user -->
+				<div class="d-none d-md-block fw-bold me-2" sec:authorize="hasAuthority('ADMIN')">
+					<a th:href="@{/logout}">
+						<button type="button" class="btn btn-dark">
+							Exit
+						</button>
+					</a>
+				</div>
 
 				<!-- Check of logged user -->
 				<div class="d-none d-md-block fw-bold" sec:authorize="hasAuthority('ADMIN')">
@@ -78,14 +102,14 @@
 
 						<!-- Menu -->
 						<ul class="dropdown-menu">
-							
+
 							<!-- Profile settings -->
 							<a th:href="@{/users/user-profile/edit/{id}(id=${userId})}" style="text-decoration: none;">
 								<li class="dropdown-item">
 									Profile Settings
 								</li>
 							</a>
-							<li><a class="dropdown-item" href="#">Exit</a></li>
+							<li><a class="dropdown-item" th:href="@{/logout}">Exit</a></li>
 						</ul>
 
 					</div>
