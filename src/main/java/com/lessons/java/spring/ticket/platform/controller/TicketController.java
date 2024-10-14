@@ -214,7 +214,7 @@ public class TicketController {
 		return "/notes/form-create-note";
 
 	}
-
+	
 	/**
 	 * Elimina il ticket selezionato;
 	 * 
