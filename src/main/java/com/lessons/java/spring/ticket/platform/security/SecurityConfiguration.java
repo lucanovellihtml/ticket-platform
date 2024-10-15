@@ -24,25 +24,25 @@ public class SecurityConfiguration {
 		http.authorizeHttpRequests()
 				.requestMatchers("/tickets/list-tickets").hasAnyAuthority("ADMIN", "OPERATOR")
 				.requestMatchers("/tickets/show", "/tickets/edit").hasAnyAuthority("ADMIN", "OPERATOR")
-				.requestMatchers("/tickets/delete", "/tickets/create").hasAuthority("ADMIN")
+				.requestMatchers("/tickets/delete", "/tickets/create", "/users/list-users", "/users/create", "/users/delete").hasAuthority("ADMIN")
 				.requestMatchers("/**").permitAll()
-				.and().formLogin()
+				.and().formLogin().defaultSuccessUrl("/tickets/list-tickets")
 				.and().logout()
 				.and().exceptionHandling()
 				.and().csrf().disable();
 		return http.build();
 	}
 
-	/**
-	 * il metodo delega la procedura di codifica della password al database
-	 * 
-	 * @return la password codificata
-	 */
 	@Bean
 	DatabaseUserDetailsService userDetailsService() {
 		return new DatabaseUserDetailsService();
 	}
 	
+	/**
+	 * il metodo delega la procedura di codifica della password al database
+	 * 
+	 * @return la password codificata
+	 */
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
