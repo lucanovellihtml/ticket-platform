@@ -92,7 +92,7 @@ public class TicketController {
 		List<Note> listNotes = service.getById(id).getNotes();
 
 		model.addAttribute("listNotes", listNotes);
-
+		
 		model.addAttribute("ticket", service.getById(id));
 
 		return "/tickets/show-notes-of-ticket";
@@ -136,10 +136,19 @@ public class TicketController {
 		
 		model.addAttribute("ticket", service.getById(id));
 		
+		// Mostro l'email dello user che ha in carico il ticket
 		model.addAttribute("userEmail", service.getById(id).getUser().getEmail());
+		
+		// Mostro la categoria presente del ticket
 		model.addAttribute("categoryTitle", service.getById(id).getCategory().getTitle());
 		
-		// Sbianco lo status altrimenti si sovrascrivono ad ogni update
+		// Mostro tutte le categorie disponibili per farle scegliere all'admin
+		model.addAttribute("categories", serviceCategory.findAllCategories());
+		
+		// Mostro tutti gli user disponibili per farle scegliere all'admin
+		model.addAttribute("users", serviceUser.findAllUsersStatusFalse(false));
+		
+		// Sbianco lo status altrimenti si sovrascrivono, essendo stringe, ad ogni update
 		String status = service.getById(id).getStatus();
 		service.getById(id).setStatus("");
 		model.addAttribute("status", status);
@@ -163,6 +172,12 @@ public class TicketController {
 		// In caso contrario, i dati vengon salvati sul db
 		if (bindingResult.hasErrors()) {
 			
+			// Se ricarica inserisco le categories presenti nel repository
+			model.addAttribute("categories", serviceCategory.findAllCategories());
+			
+			// Se ricarcia isnerisco gli user presenti nel repository
+			model.addAttribute("users", serviceUser.findAllUsersStatusFalse(false));
+			
 			// Se ricarica inserisco l'email dello user associato al ticket di modifica
 			model.addAttribute("userEmail", service.getById(formTicket.getId()).getUser().getEmail());
 			
@@ -179,6 +194,7 @@ public class TicketController {
 			return "/tickets/form-edit-ticket";
 		}
 
+		
 		service.update(formTicket);
 		
 		attributes.addFlashAttribute("successMessageUpdate", "Ticket updated...");
