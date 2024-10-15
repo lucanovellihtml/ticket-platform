@@ -33,8 +33,8 @@ public class UserController {
 
 	/**
 	 * 
-	 * @return la lista di tutti i tickets senza filtro;
-	 * @return la lista dei tickets filtrati;
+	 * @return la lista di tutti i users senza filtro;
+	 * @return la lista dei users filtrati;
 	 */
 	@GetMapping("/list-users")
 	public String index(Authentication authentication, Model model) {
@@ -110,6 +110,10 @@ public class UserController {
 		// Se ci sono errori ,viene restituita la pagina del form da ricompilare
 		// In caso contrario, i dati vengon salvati sul db
 		if (bindingResult.hasErrors()) {
+			
+			// Quando ricarica la pagina per l'errore, ricarico i dati dello user specifico
+			model.addAttribute("user", service.getById(formUser.getId()));
+			
 			return "/users/form-edit-user";
 		}
 
@@ -147,12 +151,12 @@ public class UserController {
 	}
 
 	/**
-	 * Memorizza i dati del ticket passati dal form della create
+	 * Memorizza i dati del user passati dal form della create
 	 * 
 	 * @return se i dati della form sono sbagliati, restituisce il form della create
 	 *         da ricompilare
-	 * @return una volta salvato il ticket nuovo, viene restituita la lista dei
-	 *         tickets
+	 * @return una volta salvato il user nuovo, viene restituita la lista dei
+	 *         users
 	 */
 	@PostMapping("/create")
 	public String store(@Valid @ModelAttribute("user") User formUser, BindingResult bindingResult, Model model,
@@ -160,8 +164,6 @@ public class UserController {
 
 		// Controllo se i campi compilati sono errati
 		if (bindingResult.hasErrors()) {
-			// Inserisco i dati nel model anche nella store perchè se si riaggiona la
-			// pagina, i campi vengono sbiancati
 			return "/users/form-create-user";
 		}
 
