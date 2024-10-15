@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.thymeleaf.org">
+
+<head th:insert="~{fragments/fragments :: head}">
+</head>
+
+
+<body>
+
+	<header th:insert="~{fragments/navbar :: navbar(userId=${usernameId})}">
+	</header>
+	<main>
+
+		<!-- Section form create -->
+		<section class="container text-center">
+			<div class="row gap-4 justify-content-center">
+
+				<!-- Title -->
+				<div class="col-12 pt-3 d-flex flex-column gap-3">
+					<h1>Create category</h1>
+					<p>Complete the form to create a category!!!</p>
+				</div>
+
+
+				<!-- Form create category -->
+				<form class="col-12 col-lg-6" id="form-create-category" th:object="${category}"
+					th:action="@{/categories/create}" method="POST">
+
+					<!-- Input title -->
+					<div class="mb-3">
+						<label for="title" class="form-label fw-bold">Title</label>
+						<input type="text" class="form-control" id="email" placeholder="Insert title of category"
+							aria-label="title" aria-describedby="title-user" th:field="*{title}"
+							th:errorClass="is-invalid">
+
+						<!-- Error input -->
+						<div th:if="${#fields.hasErrors('title')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('title')}" th:text="${err}"></li>
+							</ul>
+						</div>
+
+					</div>
+
+					<!-- Input description -->
+					<div class="mb-3">
+						<label for="description" class="form-label fw-bold">Description</label>
+						<textarea class="form-control" id="description" rows="3"
+							placeholder="Insert description of category" th:field="*{description}"></textarea>
+
+					</div>
+
+					<!-- Button -->
+					<div class="mb-3 d-flex justify-content-center gap-2">
+
+						<button type="submit" class="btn btn-warning mt-2 mb-2">CREATE</button>
+
+						<button type="reset" class="btn btn-danger mt-2 mb-2">RESET</button>
+
+						<a href="/categories/list-categories" class="text-decoration-none">
+							<button type="button" class="btn btn-dark mt-2 mb-2">BACK</button>
+						</a>
+
+					</div>
+
+				</form>
+
+			</div>
+
+
+		</section>
+
+
+	</main>
+
+</body>
+
+
+<th:block th:replace="~{fragments/fragments :: scripts}">
+</th:block>
+
+
+</html>
