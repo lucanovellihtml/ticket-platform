@@ -23,7 +23,7 @@
 
 
 				<!-- Condizione db popolato user operator -->
-				<th:block th:if="${users.size > 0}">
+				<th:block th:if="${users.size > 0} AND ${categories.size>0}">
 
 					<!-- Form create ticket -->
 					<form class="col-12 col-lg-6" id="form-create-ticket" th:object="${ticket}"
@@ -106,16 +106,16 @@
 				</th:block>
 
 				<!-- Condizione db non popolato user operator -->
-				<th:block th:unless="${users.size > 0}">
+				<th:block th:unless="${users.size > 0} AND ${categories.size>0}">
 
 					<!-- Error -->
 					<div class="col-12 justify-content-center position-absolute top-50 start-50 translate-middle">
 
 						<!-- Title -->
-						<h3 class="fw-bold pb-3">Operators non presenti</h3>
+						<h3 class="fw-bold pb-3">Operators o Categories non presenti</h3>
 						
 						<!-- Paragraph -->
-						<p>Crea un operatore prima di creare un ticket!!!</p>
+						<p>Crea un operatore e una categoria prima di creare un ticket!!!</p>
 
 						<!-- Spinner -->
 						<div class="spinner-border" role="status">
