@@ -33,6 +33,19 @@
 								sec:authorize="hasAuthority('ADMIN')">Create Ticket</a>
 						</li>
 
+						<!-- List categories -->
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/categories/list-categories}" sec:authorize="hasAuthority('ADMIN')">List
+								Categories</a>
+						</li>
+						
+						<!-- Create categories -->
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" th:href="@{/categories/create}"
+								sec:authorize="hasAuthority('ADMIN')">Create Category</a>
+						</li>
+
+						
 						<!-- Create user -->
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" th:href="@{/users/create}"
