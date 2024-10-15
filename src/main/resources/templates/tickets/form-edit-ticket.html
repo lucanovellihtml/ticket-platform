@@ -48,17 +48,27 @@
 						</div>
 					</div>
 
-					<!-- Input category -->
-					<div class="mb-3">
-						<input type="hidden" class="form-control" id="id_category" th:field="*{category}"
-							th:value="*{category.getId()}" aria-label="hidden id category">
-					</div>
 
 					<!-- Input title category -->
-					<div class="mb-3">
+					<div class="mb-3" sec:authorize="hasAuthority('OPERATOR')">
 						<label for="categoryTitle" class="form-label fw-bold">Category</label>
 						<input type="text" class="form-control" id="categoryTitle" th:value="${categoryTitle}"
 							aria-label="disabled category title" disabled>
+					</div>
+
+
+					<!-- Input category -->
+					<div class="mb-3" sec:authorize="hasAuthority('ADMIN')">
+
+						<!-- Title -->
+						<h6 class="form-label fw-bold">Choose new category</h6>
+
+						<!-- List category -->
+						<select class="form-select" aria-label="Select category" th:field="*{category}">
+							<option th:each="category : ${categories}" th:value="${category.id}"
+								th:text="${category.title}"></option>
+						</select>
+
 					</div>
 
 					<!-- Input status now -->
@@ -70,17 +80,17 @@
 
 					<!-- Input status -->
 					<div class="mb-3">
-						
+
 						<!-- Title -->
 						<h6 class="form-label fw-bold">Choose new status</h6>
-						
+
 						<!-- List status -->
 						<select class="form-select" aria-label="Select status" th:field="*{status}">
-						  <option th:value="'Completato'">Completato</option>
-						  <option th:value="'Da fare'">Da fare</option>
-						  <option th:value="'In corso'">In corso</option>
+							<option th:value="'Completato'">Completato</option>
+							<option th:value="'Da fare'">Da fare</option>
+							<option th:value="'In corso'">In corso</option>
 						</select>
-						
+
 					</div>
 
 					<!-- Input note -->
@@ -90,19 +100,25 @@
 						</a>
 					</div>
 
-					<!-- Input user -->
-					<div class="mb-3">
-						<input type="hidden" class="form-control" id="user" th:field="*{user}"
-							th:value="*{user.getId()}" aria-label="hidden id user">
-					</div>
-
 					<!-- Input email user -->
 					<div class="mb-3">
-						<label for="userEmail" class="form-label fw-bold">User</label>
+						<label for="userEmail" class="form-label fw-bold">Operator now</label>
 						<input type="text" class="form-control" id="userEmail" th:value="${userEmail}"
 							aria-label="disabled user email" disabled>
 					</div>
 
+					<!-- input operator -->
+					<div class="mb-3" sec:authorize="hasAuthority('ADMIN')">
+
+						<!-- Title -->
+						<h6 class="form-label fw-bold">Choose new operator</h6>
+
+						<!-- List user -->
+						<select class="form-select" aria-label="Select user" th:field="*{user}">
+							<option th:each="user : ${users}" th:value="${user.id}" th:text="${user.email}"></option>
+						</select>
+
+					</div>
 
 					<!-- Button -->
 					<div class="mb-3 d-flex justify-content-center gap-2">
