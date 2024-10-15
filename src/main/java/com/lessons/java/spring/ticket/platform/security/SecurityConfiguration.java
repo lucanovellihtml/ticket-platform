@@ -24,7 +24,17 @@ public class SecurityConfiguration {
 		http.authorizeHttpRequests()
 				.requestMatchers("/tickets/list-tickets").hasAnyAuthority("ADMIN", "OPERATOR")
 				.requestMatchers("/tickets/show", "/tickets/edit").hasAnyAuthority("ADMIN", "OPERATOR")
-				.requestMatchers("/tickets/delete", "/tickets/create", "/users/list-users", "/users/create", "/users/delete").hasAuthority("ADMIN")
+				.requestMatchers(
+						"/tickets/delete", 
+						"/tickets/create", 
+						"/users/list-users", 
+						"/users/create", 
+						"/users/delete", 
+						"/categories/list-categories", 
+						"/categories/delete", 
+						"/categories/create",
+						"/categories/edit"
+						).hasAuthority("ADMIN")
 				.requestMatchers("/**").permitAll()
 				.and().formLogin().defaultSuccessUrl("/tickets/list-tickets")
 				.and().logout()
