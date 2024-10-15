@@ -6,6 +6,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +15,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "users")
@@ -24,10 +27,16 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@Column(unique=true)
 	@NotNull(message="The email of user cannot be null!")
+	@NotEmpty(message="The email of user cannot be empty!")
+	@Size(min = 2, max = 255, message="Email must have at least 2 charachters and a maximum of 255")
 	private String email;
 	
+	@Column(unique=true)
 	@NotNull(message="The password of user cannot be null!")
+	@NotEmpty(message="The password of user cannot be empty!")
+	@Size(min = 2, max = 255, message="Password must have at least 2 charachters and a maximum of 255")
 	private String password;
 	
 	/**
